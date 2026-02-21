@@ -1,0 +1,138 @@
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-primary: var(--background-primary);
+  --background-secondary: var(--background-secondary);
+  --interactive-accent: var(--interactive-accent);
+  --text-normal: var(--text-normal);
+  --text-muted: var(--text-muted);
+}
+
+#finance-os-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: var(--font-interface);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+}
+
+/* --- CORRECCIÓN PARA MÓVILES (Android/iOS) --- */
+@media (pointer: coarse) {
+  /* Forzar visibilidad de botones que antes requerían Hover */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+  
+  .group-hover\:opacity-100 {
+    opacity: 1 !important;
+  }
+
+  /* Aumentar área táctil de botones para dedos */
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Evitar zoom automático que rompe el layout en móviles al enfocar inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* --- AJUSTES RESPONSIVOS DE ESPACIADO --- */
+@media (max-width: 640px) {
+  .rounded-\[2\.5rem\] {
+    border-radius: 1.25rem !important;
+  }
+  
+  .p-8, .sm\:p-8 {
+    padding: 1rem !important;
+  }
+
+  .p-12, .lg\:p-12 {
+    padding: 1rem !important;
+  }
+
+  /* Ajustar tamaños de fuente */
+  .text-5xl { font-size: 2.25rem !important; }
+  .text-3xl { font-size: 1.5rem !important; }
+}
+
+/* Scrollbars finos para no estorbar en pantallas pequeñas */
+#finance-os-root ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#finance-os-root ::-webkit-scrollbar-thumb {
+  background-color: var(--background-modifier-border);
+  border-radius: 10px;
+}
+
+.custom-scrollbar {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* src/styles.css */
+
+/* ... (código existente) ... */
+
+/* --- CORRECCIÓN CRÍTICA DE LAYOUT PARA PLUGINS EN OBSIDIAN --- */
+
+/* La clase que Obsidian inyecta a tu vista */
+.view-content {
+  /* Forzamos que se estire al 100% de la hoja de Obsidian */
+  height: 100%;
+}
+
+/* El contenedor inmediato de tu aplicación React */
+#finance-os-root {
+  /* Ya lo tienes, pero lo re-aseguramos */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- ESTILOS PARA DATE PICKER NATIVO --- */
+
+/* Estilo base del input date */
+#finance-os-root input[type="date"] {
+  color-scheme: dark;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+}
+
+/* Ocultar el icono por defecto para usar nuestro icono de Calendar */
+#finance-os-root input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+#finance-os-root input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Placeholder cuando no hay fecha */
+#finance-os-root input[type="date"]::-webkit-datetime-edit {
+  color: var(--text-muted);
+}
+
+#finance-os-root input[type="date"]:not(:placeholder-shown)::-webkit-datetime-edit {
+  color: var(--text-normal);
+}
+
+/* Para temas claros de Obsidian */
+.theme-light #finance-os-root input[type="date"] {
+  color-scheme: light;
+}
+
+.theme-light #finance-os-root input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
+}

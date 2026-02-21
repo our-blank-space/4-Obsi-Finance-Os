@@ -1,0 +1,2047 @@
+{
+  "transactions": [
+    {
+      "date": "2024-02-19",
+      "type": "income",
+      "amount": 100000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "8a7c5147-44f5-4e55-841f-29303177bcc3",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2024-02-19",
+      "type": "income",
+      "amount": 100000000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "f462c20a-7508-4bd6-a159-6a7eb95e5ecf",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2025-02-19",
+      "type": "income",
+      "amount": 50000000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-salario",
+      "from": "Efectivo",
+      "area": "Salario",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "5dcc9d02-0604-4e0f-ba1f-6852326f1a47",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-15",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "7ecb47ff-6bc2-4ebd-98f2-cf4848a49b1f",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-14",
+      "type": "expense",
+      "amount": 1000000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "c5c4d3a4-7de4-4346-bd7e-b5c82c16c122",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-13",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "88e7ec34-be5e-4055-88d4-c1cfc5c8b3dc",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-12",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "71eec7cb-648f-46ab-92ee-037806930105",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-11",
+      "type": "expense",
+      "amount": 100000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "75efd5e7-168a-48e5-863d-18471923cd12",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-10",
+      "type": "expense",
+      "amount": 100000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "52e21a83-6089-4cff-a02e-1bfb388e1ba4",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-09",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "e341d620-ae56-4378-98d8-c8ee45c298fb",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-08",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "ff66fb9d-84d6-411c-aa2e-8471a63c3417",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-07",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "6d6dad7e-8f08-4daf-a114-b153705bf258",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-06",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "71f6cd93-af1a-4269-bf34-a96fdf9551de",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-02-05",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "d94f4e1a-3b11-43f1-84b7-6d8a9584ae4f",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-01-04",
+      "type": "expense",
+      "amount": 10000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "Esto es un regalo a endigente de calle ",
+      "currency": "COP",
+      "toId": "",
+      "id": "9ecb002c-aed5-4277-a143-3178fd681ced",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-01-03",
+      "type": "expense",
+      "amount": 30000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-alimentación",
+      "from": "Efectivo",
+      "area": "Alimentación",
+      "note": "Compra en la calle ",
+      "currency": "COP",
+      "toId": "",
+      "id": "a37653fa-593d-4dff-a8b7-9b98dd32092c",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-01-02",
+      "type": "expense",
+      "amount": 20000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-transporte",
+      "from": "Efectivo",
+      "area": "Transporte",
+      "note": "",
+      "currency": "COP",
+      "toId": "",
+      "id": "a54fcd14-d860-414f-8f4c-47f9ac5a8868",
+      "exchangeRateSnapshot": 1
+    },
+    {
+      "date": "2026-01-01",
+      "type": "income",
+      "amount": 2000000,
+      "fromId": "acc-efectivo",
+      "areaId": "cat-salario",
+      "from": "Efectivo",
+      "area": "Salario",
+      "note": "Esta es mi primer quincena",
+      "currency": "COP",
+      "toId": "",
+      "id": "801e8134-738e-46b9-b3f9-0f6b75ac3507",
+      "exchangeRateSnapshot": 1
+    }
+  ],
+  "budgets": [],
+  "recurrents": [
+    {
+      "name": "Salario",
+      "amount": 2000000,
+      "currency": "COP",
+      "type": "income",
+      "areaId": "cat-salario",
+      "accountId": "acc-efectivo",
+      "frequency": "monthly",
+      "nextDate": "2026-03-01",
+      "isVariable": false,
+      "id": "aea17819-1fdd-4f92-81fd-917b8dca23e5",
+      "account": "Efectivo",
+      "area": "Salario",
+      "isActive": true,
+      "anchorDay": 1,
+      "lastExecuted": "2026-02-12"
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "eec56488-5129-4487-a9fb-d25b7ef150e6",
+      "date": "2026-02-14",
+      "values": {
+        "Efectivo": 178100,
+        "Caja Fuerte": 150000,
+        "Nequi": 1956162,
+        "Daviplata": 400000,
+        "Bancolombia": 0,
+        "Davivienda": 0,
+        "Inversiones": 1148000,
+        "Loan": 170000,
+        "Borrowed": -600000
+      },
+      "patrimonio": 3402262,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "1825ce19-9a95-43b1-a791-5c4206963a37",
+      "date": "2023-03-12",
+      "values": {
+        "Efectivo": 8650,
+        "Caja Fuerte": 40000,
+        "Inversiones": 200000,
+        "Loan": 277000
+      },
+      "patrimonio": 525650,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "e9ba3187-5c08-4a13-96e0-e7384b942f8a",
+      "date": "2023-03-19",
+      "values": {
+        "Efectivo": 19800,
+        "Caja Fuerte": 10000,
+        "Inversiones": 220000,
+        "Loan": 329000
+      },
+      "patrimonio": 578800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c020b8b6-13d2-43fa-8ea6-a4eb29100a5f",
+      "date": "2023-03-26",
+      "values": {
+        "Efectivo": 12100,
+        "Caja Fuerte": 170000,
+        "Inversiones": 220000,
+        "Loan": 269000
+      },
+      "patrimonio": 671100,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "ddab3c69-5bb0-48cb-86e3-fe651bea169c",
+      "date": "2023-04-02",
+      "values": {
+        "Efectivo": 51250,
+        "Caja Fuerte": 30000,
+        "Inversiones": 220000,
+        "Loan": 272000
+      },
+      "patrimonio": 573250,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c531d788-fe17-4790-a380-b53b7e35c6be",
+      "date": "2023-04-09",
+      "values": {
+        "Efectivo": 44200,
+        "Caja Fuerte": 110000,
+        "Inversiones": 300000,
+        "Loan": 249000
+      },
+      "patrimonio": 703200,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "0e1555a5-1a92-41cb-aeab-f0a519b6afb0",
+      "date": "2023-04-16",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 130000,
+        "Inversiones": 300000,
+        "Loan": 284000
+      },
+      "patrimonio": 724000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "08edf6b8-700e-43ba-b859-cb468e4040eb",
+      "date": "2023-04-23",
+      "values": {
+        "Efectivo": 55000,
+        "Caja Fuerte": 280000,
+        "Inversiones": 300000,
+        "Loan": 294000
+      },
+      "patrimonio": 929000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "6deff693-fae2-4e52-ade0-3677d98d6b10",
+      "date": "2023-04-30",
+      "values": {
+        "Efectivo": 51250,
+        "Caja Fuerte": 280000,
+        "Inversiones": 300000,
+        "Loan": 272000
+      },
+      "patrimonio": 903250,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "aece1a8a-862b-4416-bee3-ee907d90c7aa",
+      "date": "2023-05-07",
+      "values": {
+        "Efectivo": 3400,
+        "Caja Fuerte": 80000,
+        "Inversiones": 550000,
+        "Loan": 282000
+      },
+      "patrimonio": 915400,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "2a57455d-4dbf-42a2-aa7d-ab2f0e98c71d",
+      "date": "2023-05-14",
+      "values": {
+        "Efectivo": 6300,
+        "Caja Fuerte": 80000,
+        "Inversiones": 550000,
+        "Loan": 272000
+      },
+      "patrimonio": 908300,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "2ff6be5b-d0af-4f3a-b04c-d4796fce2c8e",
+      "date": "2023-05-21",
+      "values": {
+        "Efectivo": 14200,
+        "Caja Fuerte": 80000,
+        "Inversiones": 550000,
+        "Loan": 272000
+      },
+      "patrimonio": 916200,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "26c7100d-17b4-4565-9d80-1f4e038a99e5",
+      "date": "2023-05-28",
+      "values": {
+        "Efectivo": 12350,
+        "Caja Fuerte": 80000,
+        "Inversiones": 550000,
+        "Loan": 222000
+      },
+      "patrimonio": 864350,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "8957f743-d4cb-4de0-a15f-1527bcb6e836",
+      "date": "2023-06-04",
+      "values": {
+        "Efectivo": 1350,
+        "Caja Fuerte": 130000,
+        "Inversiones": 550000,
+        "Loan": 228000
+      },
+      "patrimonio": 909350,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "564ee038-b432-4dd6-aae7-da475d22e31e",
+      "date": "2023-06-11",
+      "values": {
+        "Efectivo": 25000,
+        "Caja Fuerte": 200000,
+        "Inversiones": 550000,
+        "Loan": 238000
+      },
+      "patrimonio": 1013000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "6fda2e2c-737e-407c-b059-62d57de8a0ed",
+      "date": "2023-06-18",
+      "values": {
+        "Efectivo": 28700,
+        "Caja Fuerte": 233500,
+        "Inversiones": 550000,
+        "Loan": 248000
+      },
+      "patrimonio": 1060200,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "9717626b-c85c-46a4-b9c4-38a6ded6e2e1",
+      "date": "2023-06-25",
+      "values": {
+        "Efectivo": 3900,
+        "Caja Fuerte": 240500,
+        "Inversiones": 612000,
+        "Loan": 248000
+      },
+      "patrimonio": 1104400,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "9ae43109-5c2c-4f5d-bfe4-bbf10609f947",
+      "date": "2023-07-02",
+      "values": {
+        "Efectivo": 21200,
+        "Caja Fuerte": 380500,
+        "Inversiones": 612000,
+        "Loan": 298000
+      },
+      "patrimonio": 1311700,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a1ca9a1a-0ee4-49d5-87b0-c447c0b1749b",
+      "date": "2023-07-09",
+      "values": {
+        "Efectivo": 21500,
+        "Caja Fuerte": 310500,
+        "Inversiones": 612000,
+        "Loan": 358000
+      },
+      "patrimonio": 1302000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "89c41262-5c57-4518-ab47-83a1e6800d50",
+      "date": "2023-07-16",
+      "values": {
+        "Efectivo": 84000,
+        "Caja Fuerte": 260500,
+        "Inversiones": 612000,
+        "Loan": 352000
+      },
+      "patrimonio": 1308500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "62c4f9f2-72d2-47f4-9831-aa92550156e4",
+      "date": "2023-07-23",
+      "values": {
+        "Efectivo": 84000,
+        "Caja Fuerte": 260500,
+        "Inversiones": 612000,
+        "Loan": 352000
+      },
+      "patrimonio": 1308500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "db8822fc-1af4-4d44-ab89-2aa6cfedbb2e",
+      "date": "2023-07-30",
+      "values": {
+        "Efectivo": 13000,
+        "Caja Fuerte": 155000,
+        "Inversiones": 612000,
+        "Loan": 362000
+      },
+      "patrimonio": 1142000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c1b4b9c2-86aa-4218-bbba-2b0317f6835a",
+      "date": "2023-08-06",
+      "values": {
+        "Efectivo": 19000,
+        "Caja Fuerte": 100000,
+        "Inversiones": 672000,
+        "Loan": 422000
+      },
+      "patrimonio": 1213000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c2feacbb-b58e-45f2-b7cd-da08bd741dbf",
+      "date": "2023-08-13",
+      "values": {
+        "Efectivo": 46000,
+        "Caja Fuerte": 100000,
+        "Inversiones": 672000,
+        "Loan": 422000
+      },
+      "patrimonio": 1240000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "26fce7e9-72f8-429f-a923-a575f2e6b20d",
+      "date": "2023-08-20",
+      "values": {
+        "Efectivo": 9000,
+        "Caja Fuerte": 125000,
+        "Inversiones": 625000,
+        "Loan": 422000
+      },
+      "patrimonio": 1181000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "77e4b820-4b82-4a7c-9f47-c3224524aadf",
+      "date": "2023-08-27",
+      "values": {
+        "Efectivo": 9000,
+        "Caja Fuerte": 125000,
+        "Inversiones": 625000,
+        "Loan": 422000
+      },
+      "patrimonio": 1181000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "ec24dff6-367c-4a3b-91f8-b4b7ecbfbb3e",
+      "date": "2023-09-03",
+      "values": {
+        "Efectivo": 12000,
+        "Caja Fuerte": 60000,
+        "Inversiones": 653000,
+        "Loan": 412000
+      },
+      "patrimonio": 1137000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "879b5208-d16e-4f9e-95fa-18d6c0deb47f",
+      "date": "2023-09-10",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 70000,
+        "Inversiones": 616000,
+        "Loan": 412000
+      },
+      "patrimonio": 1108000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "22b74f2d-4190-46ec-b77f-0a3182439751",
+      "date": "2023-09-17",
+      "values": {
+        "Efectivo": 1500,
+        "Caja Fuerte": 55000,
+        "Inversiones": 642000,
+        "Loan": 407000
+      },
+      "patrimonio": 1105500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "478b0dc0-775d-4676-828a-26dcfcd5a062",
+      "date": "2023-09-24",
+      "values": {
+        "Efectivo": 6000,
+        "Caja Fuerte": 120000,
+        "Inversiones": 662000,
+        "Loan": 407000
+      },
+      "patrimonio": 1195000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "4c95b3c8-b536-4ce2-a13c-a9d014050fc1",
+      "date": "2023-10-01",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 129000,
+        "Inversiones": 722000,
+        "Loan": 397000
+      },
+      "patrimonio": 1268000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "d198abfd-a9f4-40be-94b0-7c974bfa8881",
+      "date": "2023-10-08",
+      "values": {
+        "Efectivo": 14000,
+        "Caja Fuerte": 110000,
+        "Inversiones": 727000,
+        "Loan": 397000
+      },
+      "patrimonio": 1248000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "8daa88c5-9b77-4215-bf7d-3f3d8dfc607d",
+      "date": "2023-10-15",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 160000,
+        "Inversiones": 689000,
+        "Loan": 397000
+      },
+      "patrimonio": 1266000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "6d97d164-98fd-4d18-9807-d0df0463b8d9",
+      "date": "2023-10-22",
+      "values": {
+        "Efectivo": 26000,
+        "Caja Fuerte": 169000,
+        "Inversiones": 764000,
+        "Loan": 397000
+      },
+      "patrimonio": 1356000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a6f5321c-10ab-49d7-acf1-c1a054fd520d",
+      "date": "2023-10-29",
+      "values": {
+        "Efectivo": 3000,
+        "Caja Fuerte": 153000,
+        "Inversiones": 865000,
+        "Loan": 397000
+      },
+      "patrimonio": 1418000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "03c64213-c81c-4d99-addb-2708c29db110",
+      "date": "2023-11-05",
+      "values": {
+        "Efectivo": 8000,
+        "Caja Fuerte": 153000,
+        "Inversiones": 865000,
+        "Loan": 409000
+      },
+      "patrimonio": 1435000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "dc6632e3-f018-4c52-88be-03354d475e42",
+      "date": "2023-11-12",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 145000,
+        "Inversiones": 941089,
+        "Loan": 237000
+      },
+      "patrimonio": 1333089,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "de68dc3d-205f-4501-8898-2c316f20a929",
+      "date": "2023-11-19",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 111000,
+        "Inversiones": 941560,
+        "Loan": 237000
+      },
+      "patrimonio": 1309560,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c90ebbd5-ebbd-432d-a807-f382d4e83b48",
+      "date": "2023-11-26",
+      "values": {
+        "Efectivo": 12000,
+        "Caja Fuerte": 120000,
+        "Inversiones": 928680,
+        "Loan": 237000
+      },
+      "patrimonio": 1297680,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c3d52a06-a6e3-42dd-912d-95078d83d650",
+      "date": "2023-12-03",
+      "values": {
+        "Efectivo": 17000,
+        "Caja Fuerte": 190000,
+        "Inversiones": 934480,
+        "Loan": 237000
+      },
+      "patrimonio": 1378480,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c0ab088f-1524-4543-941f-4ccef69c02ad",
+      "date": "2023-12-10",
+      "values": {
+        "Efectivo": 32000,
+        "Caja Fuerte": 120000,
+        "Inversiones": 1050360,
+        "Loan": 237000
+      },
+      "patrimonio": 1439360,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "dee7b571-c3cf-47d4-b442-43d2d265ba8b",
+      "date": "2023-12-17",
+      "values": {
+        "Efectivo": 42000,
+        "Caja Fuerte": 196000,
+        "Inversiones": 995360,
+        "Loan": 237000
+      },
+      "patrimonio": 1470360,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "1d6d3c58-9450-451e-a47e-fe62bffd6a61",
+      "date": "2023-12-24",
+      "values": {
+        "Efectivo": 42000,
+        "Caja Fuerte": 196000,
+        "Inversiones": 930920,
+        "Loan": 237000
+      },
+      "patrimonio": 1405920,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "b131e1ef-8997-494d-9b50-f8587a5cf91e",
+      "date": "2023-12-31",
+      "values": {
+        "Efectivo": 32000,
+        "Caja Fuerte": 176000,
+        "Inversiones": 938960,
+        "Loan": 391000
+      },
+      "patrimonio": 1537960,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "0830d000-1c33-43cf-8733-03856e45ef29",
+      "date": "2024-01-07",
+      "values": {
+        "Efectivo": 8000,
+        "Caja Fuerte": 252000,
+        "Inversiones": 1073246,
+        "Loan": 391000
+      },
+      "patrimonio": 1724246,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "4f484450-25f2-4773-8486-6efc119b66ed",
+      "date": "2024-01-14",
+      "values": {
+        "Efectivo": 58000,
+        "Caja Fuerte": 245000,
+        "Inversiones": 1192206,
+        "Loan": 347000
+      },
+      "patrimonio": 1842206,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "8c2bec61-13a6-400a-8d14-09e16ef7f06e",
+      "date": "2024-01-21",
+      "values": {
+        "Efectivo": 68000,
+        "Caja Fuerte": 345000,
+        "Inversiones": 1024166,
+        "Loan": 247000
+      },
+      "patrimonio": 1684166,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "12a6f4c2-c254-4628-9feb-01fb3a7baa84",
+      "date": "2024-01-28",
+      "values": {
+        "Efectivo": 90000,
+        "Caja Fuerte": 285000,
+        "Inversiones": 978526,
+        "Loan": 247000
+      },
+      "patrimonio": 1600526,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "1eef3ac8-085d-4e6d-979a-7221390d1f4c",
+      "date": "2024-02-04",
+      "values": {
+        "Efectivo": 93000,
+        "Caja Fuerte": 333000,
+        "Inversiones": 1060680,
+        "Loan": 247000
+      },
+      "patrimonio": 1733680,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "cba5baab-1402-47fe-b420-62fa45a0c933",
+      "date": "2024-02-11",
+      "values": {
+        "Efectivo": 67000,
+        "Caja Fuerte": 327000,
+        "Inversiones": 1179200,
+        "Loan": 292000
+      },
+      "patrimonio": 1865200,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "5c96be75-302a-4be1-bb89-93c0b77131ad",
+      "date": "2024-02-18",
+      "values": {
+        "Efectivo": 50000,
+        "Caja Fuerte": 369000,
+        "Inversiones": 1048840,
+        "Loan": 247000
+      },
+      "patrimonio": 1714840,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "6aa5303f-2af5-4c0b-a37c-b5914cfe5c0d",
+      "date": "2024-02-25",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 169000,
+        "Inversiones": 1286000,
+        "Loan": 247000
+      },
+      "patrimonio": 1722000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "eff92af7-4da8-4d2d-a742-94d13bfbcff4",
+      "date": "2024-03-03",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 149000,
+        "Inversiones": 1716000,
+        "Loan": 247000
+      },
+      "patrimonio": 2122000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "59924be7-0a8e-48b3-988e-2ea30f9d662b",
+      "date": "2024-03-10",
+      "values": {
+        "Efectivo": 30000,
+        "Caja Fuerte": 149000,
+        "Inversiones": 1824000,
+        "Loan": 247000
+      },
+      "patrimonio": 2250000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "f4ae6a69-867c-4202-a90b-bd008d33b0a7",
+      "date": "2024-03-17",
+      "values": {
+        "Efectivo": 50000,
+        "Caja Fuerte": 129000,
+        "Inversiones": 1312000,
+        "Loan": 247000
+      },
+      "patrimonio": 1738000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c509a795-ab13-44ab-8330-47132064b738",
+      "date": "2024-03-24",
+      "values": {
+        "Efectivo": 15000,
+        "Caja Fuerte": 129000,
+        "Inversiones": 1264000,
+        "Loan": 247000
+      },
+      "patrimonio": 1655000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "b752a61b-3104-45de-be17-b30a8f579f7f",
+      "date": "2024-03-31",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 129000,
+        "Inversiones": 1280000,
+        "Loan": 267000
+      },
+      "patrimonio": 1696000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "04a24253-da30-493b-a0df-b358f8cb2f18",
+      "date": "2024-04-07",
+      "values": {
+        "Efectivo": 15000,
+        "Caja Fuerte": 147000,
+        "Inversiones": 1282000,
+        "Loan": 267000
+      },
+      "patrimonio": 1711000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "d82fc0f8-09a7-4bc6-bfcb-b81a87f0f9b0",
+      "date": "2024-04-14",
+      "values": {
+        "Efectivo": 15000,
+        "Caja Fuerte": 145000,
+        "Inversiones": 896000,
+        "Loan": 267000
+      },
+      "patrimonio": 1323000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "93e3e106-3beb-4986-9824-7f24e330d844",
+      "date": "2024-04-21",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 132000,
+        "Inversiones": 944000,
+        "Loan": 277000
+      },
+      "patrimonio": 1363000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "13a366e4-b916-43d0-9f4f-760c1afaef92",
+      "date": "2024-04-28",
+      "values": {
+        "Efectivo": 45000,
+        "Caja Fuerte": 144000,
+        "Inversiones": 984000,
+        "Loan": 277000
+      },
+      "patrimonio": 1450000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a8af0fa8-1fd5-43f8-b879-2d75fe0d8d33",
+      "date": "2024-05-05",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 184000,
+        "Inversiones": 988000,
+        "Loan": 277000
+      },
+      "patrimonio": 1473000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "ab2c42b4-8d29-4c73-932c-2c7c967fddeb",
+      "date": "2024-05-12",
+      "values": {
+        "Efectivo": 12000,
+        "Caja Fuerte": 184000,
+        "Inversiones": 928000,
+        "Loan": 277000
+      },
+      "patrimonio": 1401000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "cefab867-af2d-4ca9-8e9e-ba4dc11a1a0d",
+      "date": "2024-05-19",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 184000,
+        "Inversiones": 1048000,
+        "Loan": 277000
+      },
+      "patrimonio": 1533000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "bbe68923-bc99-44fa-bbca-12ff0c000e59",
+      "date": "2024-05-26",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 177000,
+        "Inversiones": 1100000,
+        "Loan": 277000
+      },
+      "patrimonio": 1564000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "5f565d0c-62be-4a0a-9281-55270e1d369b",
+      "date": "2024-06-02",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 134000,
+        "Inversiones": 1112000,
+        "Loan": 277000
+      },
+      "patrimonio": 1547000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "5bc6b0fa-674a-407b-a077-75a2d1329e13",
+      "date": "2024-06-09",
+      "values": {
+        "Efectivo": 6000,
+        "Caja Fuerte": 132000,
+        "Inversiones": 1048000,
+        "Loan": 282000
+      },
+      "patrimonio": 1468000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "ae927a2a-04be-44f8-87ce-03f6d5d2b494",
+      "date": "2024-06-16",
+      "values": {
+        "Efectivo": 12000,
+        "Caja Fuerte": 174500,
+        "Inversiones": 968000,
+        "Loan": 282000
+      },
+      "patrimonio": 1436500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "1bcb9e0d-7a45-49c5-b1b5-b8809be53d87",
+      "date": "2024-06-23",
+      "values": {
+        "Efectivo": 50000,
+        "Caja Fuerte": 134500,
+        "Inversiones": 896000,
+        "Loan": 307000
+      },
+      "patrimonio": 1387500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "769aa27a-ac96-4348-91bf-5a0162831fd7",
+      "date": "2024-06-30",
+      "values": {
+        "Efectivo": 36000,
+        "Caja Fuerte": 608500,
+        "Inversiones": 999680,
+        "Loan": 291000
+      },
+      "patrimonio": 1935180,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c30edaf9-6076-47d1-862f-318a2ea65b44",
+      "date": "2024-07-07",
+      "values": {
+        "Efectivo": 17000,
+        "Caja Fuerte": 462500,
+        "Inversiones": 799400,
+        "Loan": 321000
+      },
+      "patrimonio": 1599900,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "4e380651-5e4a-4f1e-ad3f-20797343d238",
+      "date": "2024-07-14",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 364500,
+        "Inversiones": 804000,
+        "Loan": 329000
+      },
+      "patrimonio": 1507500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "1ec4a905-e522-4c29-8477-ef84181aa2b8",
+      "date": "2024-07-21",
+      "values": {
+        "Efectivo": 23150,
+        "Caja Fuerte": 1016462,
+        "Inversiones": 1199520,
+        "Loan": 329000
+      },
+      "patrimonio": 2568132,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "25a7cdab-d124-4223-8ce7-fce03f5cb6eb",
+      "date": "2024-07-28",
+      "values": {
+        "Efectivo": 60150,
+        "Caja Fuerte": 1227000,
+        "Inversiones": 1581520,
+        "Loan": 337000
+      },
+      "patrimonio": 3205670,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "44d564c9-6a0f-4602-a67a-bcb990e45e02",
+      "date": "2024-08-04",
+      "values": {
+        "Efectivo": 9050,
+        "Caja Fuerte": 802200,
+        "Inversiones": 1728880,
+        "Loan": 337000
+      },
+      "patrimonio": 2877130,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "bfe4292c-5078-402a-bf5c-4cd2980f780e",
+      "date": "2024-08-11",
+      "values": {
+        "Efectivo": 32000,
+        "Caja Fuerte": 1012200,
+        "Inversiones": 2006680,
+        "Loan": 345000
+      },
+      "patrimonio": 3395880,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "e42bde7a-906c-4a91-a737-ce30395b66c5",
+      "date": "2024-08-18",
+      "values": {
+        "Efectivo": 10500,
+        "Caja Fuerte": 422200,
+        "Inversiones": 2541080,
+        "Loan": 345000
+      },
+      "patrimonio": 3318780,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "e4370e06-9d66-4db2-a25d-712b7e24ed74",
+      "date": "2024-08-25",
+      "values": {
+        "Efectivo": 3850,
+        "Caja Fuerte": 422200,
+        "Inversiones": 2754880,
+        "Loan": 486500
+      },
+      "patrimonio": 3667430,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "6ed71df9-8a58-4b89-bcf3-6629c086229e",
+      "date": "2024-09-01",
+      "values": {
+        "Efectivo": 3250,
+        "Caja Fuerte": 1062000,
+        "Inversiones": 2738000,
+        "Loan": 546500
+      },
+      "patrimonio": 4349750,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "093711a4-a95d-412c-80a6-7810544a14ce",
+      "date": "2024-09-08",
+      "values": {
+        "Efectivo": 19250,
+        "Caja Fuerte": 512200,
+        "Inversiones": 2972000,
+        "Loan": 423000
+      },
+      "patrimonio": 3926450,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "f30d0025-e4d3-4b6d-86e5-25ede8d56b2b",
+      "date": "2024-09-15",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 1404200,
+        "Inversiones": 3264000,
+        "Loan": 369500
+      },
+      "patrimonio": 5047700,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "53a4ff67-e660-4d1f-a652-5bd2d9990079",
+      "date": "2024-09-22",
+      "values": {
+        "Efectivo": 10000,
+        "Caja Fuerte": 563150,
+        "Inversiones": 3760000,
+        "Loan": 419500
+      },
+      "patrimonio": 4752650,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "f6c1652f-b028-4522-a139-3154c89fd7cc",
+      "date": "2024-09-29",
+      "values": {
+        "Efectivo": 1900,
+        "Caja Fuerte": 593000,
+        "Inversiones": 4232000,
+        "Loan": 412000
+      },
+      "patrimonio": 5238900,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "75b9b51b-6474-4465-a60e-48e20526b74e",
+      "date": "2024-10-06",
+      "values": {
+        "Efectivo": 55000,
+        "Caja Fuerte": 443100,
+        "Inversiones": 4300680,
+        "Loan": 451500
+      },
+      "patrimonio": 5250280,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "fe00c4e8-8ab3-4fb9-939b-807f8d499f85",
+      "date": "2024-10-13",
+      "values": {
+        "Efectivo": 50000,
+        "Caja Fuerte": 464850,
+        "Inversiones": 4069120,
+        "Loan": 425000
+      },
+      "patrimonio": 5008970,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "73144d04-6e3c-48d9-bd09-4f0e6a8c0289",
+      "date": "2024-10-20",
+      "values": {
+        "Efectivo": 121900,
+        "Caja Fuerte": 948650,
+        "Inversiones": 4740000,
+        "Loan": 425250
+      },
+      "patrimonio": 6235800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "57e60b9f-eff2-4ae3-b1e9-d254f4b68eae",
+      "date": "2024-10-27",
+      "values": {
+        "Efectivo": 2000,
+        "Caja Fuerte": 1002000,
+        "Inversiones": 4064000,
+        "Loan": 445000
+      },
+      "patrimonio": 5513000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "54637bc1-d867-4cd2-a4ef-67779abef1be",
+      "date": "2024-11-03",
+      "values": {
+        "Efectivo": 148000,
+        "Caja Fuerte": 243950,
+        "Inversiones": 4644200,
+        "Loan": 470000
+      },
+      "patrimonio": 5506150,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "3ec41057-64f9-4c1e-9aac-7e074d002a71",
+      "date": "2024-11-10",
+      "values": {
+        "Efectivo": 2000,
+        "Caja Fuerte": 712000,
+        "Inversiones": 6090000,
+        "Loan": 400000
+      },
+      "patrimonio": 7204000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "887479a4-2e4c-4d33-b9dc-5867323033aa",
+      "date": "2024-11-17",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 995200,
+        "Inversiones": 7190000,
+        "Loan": 400000
+      },
+      "patrimonio": 8605200,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c7a6b1ac-6d94-40ab-b878-4b8083c92cc9",
+      "date": "2024-11-24",
+      "values": {
+        "Efectivo": 6000,
+        "Caja Fuerte": 731000,
+        "Inversiones": 8948000,
+        "Loan": 726000
+      },
+      "patrimonio": 10411000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "8a9bebea-4cb7-4522-805b-e805a831c1a9",
+      "date": "2024-12-01",
+      "values": {
+        "Efectivo": 2000,
+        "Caja Fuerte": 709000,
+        "Inversiones": 10524000,
+        "Loan": 706000
+      },
+      "patrimonio": 11941000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "2d175bfa-71b4-4331-8940-10a5cd2556e5",
+      "date": "2024-12-08",
+      "values": {
+        "Efectivo": 6000,
+        "Caja Fuerte": 664300,
+        "Inversiones": 12492000,
+        "Loan": 756000
+      },
+      "patrimonio": 13918300,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "d8df78d2-2c92-4213-8d39-d16c361d8c34",
+      "date": "2024-12-15",
+      "values": {
+        "Efectivo": 57000,
+        "Caja Fuerte": 536800,
+        "Inversiones": 12644000,
+        "Loan": 423500
+      },
+      "patrimonio": 13661300,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "f78d5740-d35a-4eb7-aca2-beeb28e9e12c",
+      "date": "2024-12-22",
+      "values": {
+        "Efectivo": 302500,
+        "Caja Fuerte": 574148,
+        "Inversiones": 10648000,
+        "Loan": 498000
+      },
+      "patrimonio": 12022648,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "0741160e-0ad7-488f-9f31-707040b06358",
+      "date": "2024-12-29",
+      "values": {
+        "Efectivo": 50000,
+        "Caja Fuerte": 129000,
+        "Inversiones": 9748000,
+        "Loan": 418000
+      },
+      "patrimonio": 10345000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a903f5f6-ac44-4177-b54d-513a84e29a92",
+      "date": "2025-01-05",
+      "values": {
+        "Efectivo": 55000,
+        "Caja Fuerte": 111500,
+        "Inversiones": 11488000,
+        "Loan": 418000
+      },
+      "patrimonio": 12072500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "320f8b99-ae86-4f62-ad6d-a78ab3cf9c23",
+      "date": "2025-01-12",
+      "values": {
+        "Efectivo": 852000,
+        "Caja Fuerte": 159920,
+        "Inversiones": 10596000,
+        "Loan": 324000
+      },
+      "patrimonio": 11931920,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "14ce0842-72f3-47df-b160-44fc395a8afa",
+      "date": "2025-01-19",
+      "values": {
+        "Efectivo": 773000,
+        "Caja Fuerte": 151400,
+        "Inversiones": 12696000,
+        "Loan": 332500
+      },
+      "patrimonio": 13952900,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c3e24b32-e4e5-447c-9fd2-0d92ee39f900",
+      "date": "2025-01-26",
+      "values": {
+        "Efectivo": 450000,
+        "Caja Fuerte": 251400,
+        "Inversiones": 10620000,
+        "Loan": 504000
+      },
+      "patrimonio": 11825400,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "cc121c40-2ef1-40ce-bcee-3bfa1249d154",
+      "date": "2025-02-02",
+      "values": {
+        "Efectivo": 450000,
+        "Caja Fuerte": 225400,
+        "Inversiones": 9348000,
+        "Loan": 513000
+      },
+      "patrimonio": 10536400,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "4a40f77a-0185-4e5c-8554-f8e8a0edf584",
+      "date": "2025-02-09",
+      "values": {
+        "Efectivo": 25000,
+        "Caja Fuerte": 548000,
+        "Inversiones": 8516000,
+        "Loan": 422000,
+        "Estate": 2280000
+      },
+      "patrimonio": 11791000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "42a82e81-ab99-4cba-9ded-cc70a2caa6a7",
+      "date": "2025-02-16",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 768000,
+        "Inversiones": 8920000,
+        "Loan": 422000,
+        "Estate": 2280000
+      },
+      "patrimonio": 12410000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "50487570-247f-4d50-a2db-7cbfc62413fd",
+      "date": "2025-02-23",
+      "values": {
+        "Efectivo": 112000,
+        "Caja Fuerte": 75000,
+        "Inversiones": 7928000,
+        "Loan": 422000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10817000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "2b9f846b-5734-4d03-80d9-26ce561c6c90",
+      "date": "2025-03-02",
+      "values": {
+        "Efectivo": 104000,
+        "Caja Fuerte": 75000,
+        "Inversiones": 7168000,
+        "Loan": 422000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10049000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "b37ec3a1-1dcc-4762-a1fd-e6cd06f536e6",
+      "date": "2025-03-09",
+      "values": {
+        "Efectivo": 70000,
+        "Caja Fuerte": 262000,
+        "Inversiones": 6076000,
+        "Loan": 422000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9110000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "dde9ac97-fa87-4853-ac05-ba13779e4400",
+      "date": "2025-03-16",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 187000,
+        "Inversiones": 6628000,
+        "Loan": 324000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9439000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "652b4d4a-5fa3-43a2-a5db-86345461c104",
+      "date": "2025-03-23",
+      "values": {
+        "Efectivo": 42000,
+        "Caja Fuerte": 187000,
+        "Inversiones": 7096000,
+        "Loan": 344000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9949000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "acd4920b-ceee-451a-9e36-77d665d231ad",
+      "date": "2025-03-30",
+      "values": {
+        "Efectivo": 25000,
+        "Caja Fuerte": 196000,
+        "Inversiones": 6504000,
+        "Loan": 344000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9349000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "63e1693c-15eb-4b93-860f-a0ba3a1a1fd4",
+      "date": "2025-04-06",
+      "values": {
+        "Efectivo": 27000,
+        "Caja Fuerte": 177000,
+        "Inversiones": 6312000,
+        "Loan": 344000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9140000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a573c03f-9b6f-4166-bb47-96c7c135f344",
+      "date": "2025-04-13",
+      "values": {
+        "Efectivo": 27000,
+        "Caja Fuerte": 177000,
+        "Inversiones": 6312000,
+        "Loan": 344000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9140000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "19fc4f06-7846-470d-9123-fad9a0d48cf7",
+      "date": "2025-04-20",
+      "values": {
+        "Efectivo": 27000,
+        "Caja Fuerte": 177000,
+        "Inversiones": 6312000,
+        "Loan": 344000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9140000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "b689ace4-4917-45c8-b537-75725043a4b1",
+      "date": "2025-04-27",
+      "values": {
+        "Efectivo": 52500,
+        "Caja Fuerte": 891000,
+        "Inversiones": 6920000,
+        "Loan": 359000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10502500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "cc2774c3-83d2-4419-ba18-e91c4c2b557c",
+      "date": "2025-05-04",
+      "values": {
+        "Efectivo": 52500,
+        "Caja Fuerte": 891000,
+        "Inversiones": 6920000,
+        "Loan": 359000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10502500,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "d123bc39-c82a-4834-bbaa-f8c197d8df21",
+      "date": "2025-05-11",
+      "values": {
+        "Efectivo": 67000,
+        "Caja Fuerte": 867000,
+        "Inversiones": 7996000,
+        "Loan": 359000,
+        "Estate": 2280000
+      },
+      "patrimonio": 11569000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "c41dcc6c-2558-4913-98d4-1ee033373d75",
+      "date": "2025-05-18",
+      "values": {
+        "Efectivo": 70000,
+        "Caja Fuerte": 573000,
+        "Inversiones": 7644000,
+        "Loan": 364000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10931000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "0ceb774b-6602-47de-ac0e-0465b0f8cb13",
+      "date": "2025-05-25",
+      "values": {
+        "Efectivo": 70000,
+        "Caja Fuerte": 573000,
+        "Inversiones": 7644000,
+        "Loan": 364000,
+        "Estate": 2280000
+      },
+      "patrimonio": 10931000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "5ec69dda-7285-4e4b-b19d-08a29dc0228e",
+      "date": "2025-06-01",
+      "values": {
+        "Efectivo": 20000,
+        "Caja Fuerte": 211000,
+        "Inversiones": 7112000,
+        "Loan": 364000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9987000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "50e8b9d6-f185-4c24-9bc8-6ca2015bfc04",
+      "date": "2025-06-08",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 192000,
+        "Inversiones": 6588000,
+        "Loan": 399000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9483000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "aa5b0d46-de52-4442-9e06-c84408555541",
+      "date": "2025-06-15",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 192000,
+        "Inversiones": 6588000,
+        "Loan": 399000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9483000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "30e4f088-bd7c-4f01-9fe4-af2f0d0265c3",
+      "date": "2025-06-22",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 192000,
+        "Inversiones": 6588000,
+        "Loan": 399000,
+        "Estate": 2280000
+      },
+      "patrimonio": 9483000,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "fe19e8f5-0aa4-4f3f-96c0-45ebe5972434",
+      "date": "2025-06-29",
+      "values": {
+        "Caja Fuerte": 253000,
+        "Inversiones": 6600000,
+        "Loan": 498050,
+        "Estate": 2280000
+      },
+      "patrimonio": 9631050,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "74026415-619f-46af-bc0d-7c693121ebb6",
+      "date": "2025-07-06",
+      "values": {
+        "Efectivo": 24000,
+        "Caja Fuerte": 253000,
+        "Inversiones": 6600000,
+        "Loan": 498050,
+        "Estate": 2280000
+      },
+      "patrimonio": 9655050,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "b343bab5-7c2d-4388-aa46-75fc113129f1",
+      "date": "2025-07-13",
+      "values": {
+        "Efectivo": 15850,
+        "Caja Fuerte": 577000,
+        "Inversiones": 7339280,
+        "Loan": 506050,
+        "Estate": 2280000
+      },
+      "patrimonio": 10718180,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "67516602-1191-4dc5-a0a1-7ff7ff9b99fd",
+      "date": "2025-07-20",
+      "values": {
+        "Caja Fuerte": 560000,
+        "Inversiones": 9236000,
+        "Loan": 506050,
+        "Estate": 2280000
+      },
+      "patrimonio": 12582050,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "189e0b46-59ff-4511-bddc-3950dfa6f6f3",
+      "date": "2025-07-27",
+      "values": {
+        "Caja Fuerte": 201000,
+        "Inversiones": 7308000,
+        "Loan": 399800,
+        "Estate": 3180000
+      },
+      "patrimonio": 11088800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "70994809-60a0-40c3-9170-2211d0699ed8",
+      "date": "2025-08-03",
+      "values": {
+        "Caja Fuerte": 201000,
+        "Inversiones": 8064000,
+        "Loan": 799800,
+        "Estate": 3180000
+      },
+      "patrimonio": 12244800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "800de64f-8309-4474-8cc4-dec85de7cca4",
+      "date": "2025-08-10",
+      "values": {
+        "Caja Fuerte": 201000,
+        "Inversiones": 8064000,
+        "Loan": 799800,
+        "Estate": 3180000
+      },
+      "patrimonio": 12244800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "5e90d30a-86dd-4959-afda-393339abb3f2",
+      "date": "2025-08-17",
+      "values": {
+        "Efectivo": 150000,
+        "Caja Fuerte": 888000,
+        "Inversiones": 8584000,
+        "Loan": 799800,
+        "Estate": 3180000
+      },
+      "patrimonio": 13601800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "f054bfd1-0f1b-4c05-938f-279ab4860a21",
+      "date": "2025-08-24",
+      "values": {
+        "Caja Fuerte": 811000,
+        "Inversiones": 7541637,
+        "Loan": 832000,
+        "Estate": 3180000
+      },
+      "patrimonio": 12364637,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "dbacd1c3-251b-4db8-ba3a-fa23c85f8229",
+      "date": "2025-08-31",
+      "values": {
+        "Caja Fuerte": 811000,
+        "Inversiones": 7541637,
+        "Loan": 745800,
+        "Estate": 3180000
+      },
+      "patrimonio": 12278437,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "4929e297-2e37-4d42-b926-aaa660836de8",
+      "date": "2025-09-07",
+      "values": {
+        "Caja Fuerte": 470000,
+        "Inversiones": 7744000,
+        "Loan": 745800,
+        "Estate": 3180000
+      },
+      "patrimonio": 12139800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "a5b23170-7887-4393-87ce-3cb668f1d755",
+      "date": "2025-09-14",
+      "values": {
+        "Caja Fuerte": 586000,
+        "Inversiones": 8576000,
+        "Loan": 745800,
+        "Estate": 3180000
+      },
+      "patrimonio": 13087800,
+      "currency": "COP",
+      "note": ""
+    },
+    {
+      "id": "7e37910c-0fd2-4e3d-aa7b-72f3f8e808cb",
+      "date": "2025-09-21",
+      "values": {
+        "Caja Fuerte": 249001,
+        "Inversiones": 6892000,
+        "Loan": 853800
+      },
+      "patrimonio": 7994801,
+      "currency": "COP",
+      "note": ""
+    }
+  ]
+}

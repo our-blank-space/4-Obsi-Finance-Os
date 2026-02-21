@@ -1,0 +1,10 @@
+{
+    "id": "obsidian-finance-os",
+    "name": "Finance OS",
+    "version": "2.2.0",
+    "minAppVersion": "2.2.0",
+    "description": "Sistema operativo financiero completo portado a Obsidian.",
+    "author": "Andres Vega",
+    "authorUrl": "https://github.com/tu-usuario",
+    "isDesktopOnly": false
+}
