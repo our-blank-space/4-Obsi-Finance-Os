@@ -325,7 +325,7 @@ export const SettingsView: React.FC = () => {
             <h3 className="text-xs font-black uppercase flex items-center gap-2 text-[var(--text-muted)] tracking-widest">
               <Wallet size={14} /> {t('settings.lists')}
             </h3>
-            <TaxonomyManager title="Cuentas" items={accounts} type="account" onAdd={(v) => { addEntity('account', v); triggerAutoSave(); }} />
+            <TaxonomyManager title={t('settings.section.accounts')} items={accounts} type="account" onAdd={(v) => { addEntity('account', v); triggerAutoSave(); }} />
 
             <div className="p-3 bg-[var(--background-secondary)]/50 border border-[var(--interactive-accent)]/20 rounded-xl flex gap-3 text-xs text-[var(--interactive-accent)]">
               <Shield size={16} className="shrink-0 mt-0.5" />
@@ -333,7 +333,7 @@ export const SettingsView: React.FC = () => {
                 <strong className="text-[var(--text-normal)]">{t('settings.tip.liquidity_title')}</strong> <span className="text-[var(--text-muted)]">{t('settings.tip.liquidity_desc')}</span>
               </p>
             </div>
-            <TaxonomyManager title="Categorías" items={areas} type="area" onAdd={(v) => { addEntity('area', v); triggerAutoSave(); }} />
+            <TaxonomyManager title={t('settings.section.areas')} items={areas} type="area" onAdd={(v) => { addEntity('area', v); triggerAutoSave(); }} />
 
             <div className="p-3 bg-[var(--background-secondary)]/50 border border-[var(--interactive-accent)]/20 rounded-xl flex gap-3 text-xs text-[var(--interactive-accent)]">
               <GitMerge size={16} className="shrink-0 mt-0.5" />

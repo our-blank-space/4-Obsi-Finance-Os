@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "dev": "concurrently \"node esbuild.config.mjs\" \"npx @tailwindcss/cli -i ./src/styles.css -o ./styles.css --watch\"",
-    "build": "npx @tailwindcss/cli -i ./src/styles.css -o ./styles.css --minify && node esbuild.config.mjs production",
+    "dev": "concurrently \"node esbuild.config.mjs\" \"npx tailwindcss -i ./src/styles.css -o ./styles.css --watch\"",
+    "build": "npx tailwindcss -i ./src/styles.css -o ./styles.css --minify && node esbuild.config.mjs production",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -20,7 +20,6 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.18",
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^15.0.0",
     "@testing-library/user-event": "^14.5.0",

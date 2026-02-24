@@ -79,6 +79,7 @@ export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, on
                 <Input
                     value={newItem}
                     onChange={e => setNewItem(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter' && newItem) { onAdd(newItem); setNewItem(''); } }}
                     placeholder={type === 'account' ? t('taxonomy.new_account') : t('taxonomy.new_category')}
                     className="h-9 text-xs"
                 />
@@ -92,7 +93,7 @@ export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, on
             </div>
 
             {/* Lista Inteligente */}
-            <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+            <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
                 {items.map(item => {
                     const isEditing = editingItem === item;
 
