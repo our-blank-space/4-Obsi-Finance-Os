@@ -1,6 +1,6 @@
 {
   "name": "obsidian-finance-os",
-  "version": "1.0.0",
+  "version": "2.3.0",
   "main": "main.js",
   "scripts": {
     "dev": "concurrently \"node esbuild.config.mjs\" \"npx tailwindcss -i ./src/styles.css -o ./styles.css --watch\"",
