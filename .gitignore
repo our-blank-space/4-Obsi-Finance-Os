@@ -12,15 +12,15 @@ data.json
 # BUILD ARTIFACTS — Generados por npm run build / npm run dev
 # ============================================================
 # Deben adjuntarse a los GitHub Releases, no al repositorio.
-main.js
-*.js.map
-*.map
+# main.js
+# *.js.map
+# *.map
 
 # ============================================================
 # DEPENDENCIAS — Instaladas con npm install
 # ============================================================
 node_modules/
-package-lock.json
+# package-lock.json
 
 # ============================================================
 # ARCHIVOS TEMPORALES / BORRADOR
