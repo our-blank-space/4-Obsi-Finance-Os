@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from '../ui/Modal';
-import { TransactionForm } from '../logs/TransactionForm';
+import { TransactionForm } from '../transactions/TransactionForm';
 import { Transaction, FinanceAccount, FinanceCategory } from '../../types';
 
 import { useTranslation } from '../../hooks/useTranslation';

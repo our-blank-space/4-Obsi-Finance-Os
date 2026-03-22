@@ -6,7 +6,7 @@ export const useMarketData = (assets: AssetProject[]) => {
         // 1. Determine Portfolio Date Range
         const allDates = assets.flatMap(a => [
             ...(a.valuationHistory?.map(v => new Date(v.date)) || []),
-            ...a.entries.map(e => new Date(e.date))
+            ...(a.entries || []).map(e => new Date(e.date))
         ]).filter(d => !isNaN(d.getTime()));
 
         if (allDates.length === 0) return [];
@@ -37,7 +37,7 @@ export const useMarketData = (assets: AssetProject[]) => {
                 // Simplified: Sum of active investments up to this date
                 // Better: Interpolate valuationHistory?
                 // MVP: Just sum cost basis of entries before this date
-                const entriesUntilNow = asset.entries.filter(e => e.date <= dateStr);
+                const entriesUntilNow = (asset.entries || []).filter(e => e.date <= dateStr);
                 const invested = entriesUntilNow
                     .filter(e => e.type === 'investment')
                     .reduce((sum, e) => sum + e.amount, 0);

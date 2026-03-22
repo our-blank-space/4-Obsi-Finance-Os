@@ -53,7 +53,8 @@ const MIGRATIONS: readonly Migration<Data.PluginData>[] = [
     migrateV7ToV8(),
     migrateV8ToV9(),
     migrateV9ToV10(),
-    migrateV10ToV11()
+    migrateV10ToV11(),
+    migrateV11ToV12()
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -256,6 +257,47 @@ function migrateV10ToV11(): Migration<Data.PluginData> {
                 meta: {
                     ...data.meta,
                     version: 11
+                }
+            };
+        }
+    };
+}
+
+/**
+ * v11 → v12
+ * Core UI Modules toggles.
+ * Ensures that previously hardcoded core UI views are enabled by default for existing users.
+ */
+function migrateV11ToV12(): Migration<Data.PluginData> {
+    return {
+        from: 11,
+        to: 12,
+        apply: (data: Data.PluginData) => {
+            const enabledModules: any[] = [...(data.enabledModules || [])];
+
+            // Core Modules that were previously hardcoded and are now toggleable
+            const requiredModules = [
+                'dashboard',
+                'balances',
+                'logs',
+                'monthly_review',
+                'annual_report',
+                'guide'
+            ];
+
+            requiredModules.forEach(mod => {
+                if (!enabledModules.includes(mod)) {
+                    enabledModules.push(mod);
+                }
+            });
+
+            return {
+                ...data,
+                version: 12,
+                enabledModules,
+                meta: {
+                    ...data.meta,
+                    version: 12
                 }
             };
         }

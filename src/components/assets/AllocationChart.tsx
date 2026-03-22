@@ -42,7 +42,7 @@ export const AllocationChart: React.FC<Props> = ({ data, currency }) => {
                         ))}
                     </Pie>
                     <Tooltip
-                        formatter={(value: number) => format(value, currency)}
+                        formatter={(value: any) => format(value, currency)}
                         contentStyle={{
                             backgroundColor: 'var(--background-secondary)',
                             borderRadius: '12px',

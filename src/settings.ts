@@ -47,7 +47,7 @@ export class FinanceOSSettingTab extends PluginSettingTab {
             .setName('Activar Modo Testing')
             .setDesc('Permite simular fechas futuras para probar transacciones recurrentes.')
             .addToggle(toggle => toggle
-                .setValue(this.plugin.data.settings.testingMode)
+                .setValue(this.plugin.data.settings.testingMode || false)
                 .onChange(async (value) => {
                     this.plugin.data.settings.testingMode = value;
 

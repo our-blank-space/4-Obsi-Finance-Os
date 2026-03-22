@@ -50,8 +50,7 @@ export class PersistenceTests {
     private async testPersistenceLifecycle() {
         console.log("TEST: Persistence Lifecycle (Force Save)...");
 
-        const shardManager = new ShardManager(this.api, this.basePath);
-        const persistence = new PersistenceService(this.api, this.basePath, shardManager);
+        const persistence = new PersistenceService(this.api as any, this.basePath);
 
         const testState = {
             transactions: [
@@ -66,10 +65,10 @@ export class PersistenceTests {
         // 1. Shard the 2022 transaction to .finance-db/ledger/2022-01.json
         // 2. Write the remainder to the main data.json
 
-        await persistence.forceSave(testState);
+        await persistence.consolidate(testState as any);
 
         // Verify shard exists
-        const shardData = await this.api.readJson<any>(`${this.basePath}/.finance-db/ledger/2022-01.json`);
+        const shardData = await this.api.readJson<any>(`${this.basePath}/FinanceOS-Data/ledger/2022-01.json`);
         this.assert(shardData !== null, "2022 shard file should have been created");
         this.assert(shardData.transactions.some((t: any) => t.id === 'test-cycle-1'), "Shard should contain the test transaction");
 

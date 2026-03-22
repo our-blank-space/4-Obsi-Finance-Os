@@ -59,7 +59,7 @@ export const PerformanceChart: React.FC<Props> = ({ data, showBenchmark = true }
                             borderRadius: '12px',
                             color: 'var(--text-normal)'
                         }}
-                        formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name === 'portfolioPct' ? 'Mi Portafolio' : 'S&P 500']}
+                        formatter={(value: any, name?: string) => [`${value.toFixed(2)}%`, name === 'portfolioPct' ? 'Mi Portafolio' : 'S&P 500']}
                         labelFormatter={(label) => new Date(label).toLocaleDateString()}
                     />
                     <Legend />

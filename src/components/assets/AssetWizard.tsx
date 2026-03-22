@@ -25,7 +25,8 @@ export const AssetWizard: React.FC<Props> = ({ isOpen, onClose, onSave, initialA
         status: 'active',
         purchaseDate: new Date().toISOString().split('T')[0],
         isIncomeGenerating: false,
-        isDepreciating: true
+        isDepreciating: true,
+        liquidity: 'liquid'
     });
 
     useEffect(() => {
@@ -40,7 +41,8 @@ export const AssetWizard: React.FC<Props> = ({ isOpen, onClose, onSave, initialA
                 status: 'active',
                 purchaseDate: new Date().toISOString().split('T')[0],
                 isIncomeGenerating: false,
-                isDepreciating: true
+                isDepreciating: true,
+                liquidity: 'liquid'
             });
         }
     }, [isOpen, initialAsset, baseCurrency]);
@@ -59,7 +61,11 @@ export const AssetWizard: React.FC<Props> = ({ isOpen, onClose, onSave, initialA
             isDepreciating = true;
         }
 
-        setData(prev => ({ ...prev, category, isIncomeGenerating: isIncome, isDepreciating }));
+        let liquidity: 'liquid' | 'semi-liquid' | 'illiquid' = 'liquid';
+        if (category === 'Real Estate' || category === 'Business') liquidity = 'illiquid';
+        if (category === 'Fixed Income') liquidity = 'semi-liquid';
+
+        setData(prev => ({ ...prev, category, isIncomeGenerating: isIncome, isDepreciating, liquidity }));
     };
 
     const handleFinish = () => {
@@ -77,6 +83,7 @@ export const AssetWizard: React.FC<Props> = ({ isOpen, onClose, onSave, initialA
 
             isIncomeGenerating: !!data.isIncomeGenerating,
             isDepreciating: !!data.isDepreciating,
+            liquidity: data.liquidity || 'liquid',
             usefulLifeYears: Number(data.usefulLifeYears) || 0,
             depreciationRate: Number(data.depreciationRate) || 0,
 
@@ -109,6 +116,17 @@ export const AssetWizard: React.FC<Props> = ({ isOpen, onClose, onSave, initialA
                         options={['COP', 'USD', 'EUR'].map(v => ({ value: v, label: v }))}
                     />
                 </div>
+
+                <Select
+                    label="Liquidez"
+                    value={data.liquidity || 'liquid'}
+                    onChange={e => setData({ ...data, liquidity: e.target.value as any })}
+                    options={[
+                        { value: 'liquid', label: 'Líquido (Efectivo, Acciones)' },
+                        { value: 'semi-liquid', label: 'Semi-Líquido (CDT, Cripto)' },
+                        { value: 'illiquid', label: 'Ilíquido (Inmuebles, Vehículos)' }
+                    ]}
+                />
 
                 <div className="grid grid-cols-2 gap-4">
                     <NumericInput

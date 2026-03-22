@@ -1,49 +1,94 @@
-# vscode
-.vscode 
-
-# Intellij
-*.iml
-.idea
-
-# npm
-node_modules
-
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
-main.js
-
-# Exclude sourcemaps
-*.map
-
-# obsidian
-data.json
-
-# Exclude macOS Finder (System Explorer) View States
-.DS_Store
-# Dependencias de Node.js (se instalan con npm install, no se suben)
-node_modules/
-package-lock.json
-
-# Archivos de datos de Obsidian (¡MUY IMPORTANTE!)
-# Aquí es donde Obsidian guarda las configuraciones y datos de tu plugin localmente.
-# No debe subirse jamás porque contiene tu información financiera personal.
+# ============================================================
+# DATOS FINANCIEROS PERSONALES — NUNCA SUBIR A GIT
+# ============================================================
+# Contienen transacciones, saldos y cuentas bancarias reales.
+ledger.json
+FinanceOS-Data/
+.finance-db/
 data.json
 *.json.bak
 
-# Archivos de variables de entorno y secretos
+# ============================================================
+# BUILD ARTIFACTS — Generados por npm run build / npm run dev
+# ============================================================
+# Deben adjuntarse a los GitHub Releases, no al repositorio.
+main.js
+*.js.map
+*.map
+
+# ============================================================
+# DEPENDENCIAS — Instaladas con npm install
+# ============================================================
+node_modules/
+package-lock.json
+
+# ============================================================
+# ARCHIVOS TEMPORALES / BORRADOR
+# ============================================================
+# Prompts de IA y archivos de texto sin relación con el plugin.
+Ia1.txt
+Ia1.txt 
+Ia2.txt
+Ia3.txt
+Ia4test.txt
+Ia5creativo.txt
+proms/
+
+# Scripts de migración y utilidades de desarrollo personal.
+migrate-excel-data.js
+check_translations.py
+check_translations.ts
+used_keys.txt
+api.py
+py.py
+
+# Informes internos de desarrollo.
+mission_report_final.md
+mission_report_phase9.md
+
+# ============================================================
+# DOCUMENTACIÓN INTERNA (no relevante para usuarios públicos)
+# ============================================================
+CHECKLIST_PRODUCCION.md
+ESTADO_COMPONENTES.md
+ESTADO_FINAL.md
+INICIO_RAPIDO.md
+SOLUCION_CONFIGURACIONES.md
+AI_NOTIFICATION.md
+PLAN_CORRECCION_TESTS.md
+README_LTS.md
+
+# ============================================================
+# ENTORNOS VIRTUALES
+# ============================================================
+.venv/
+
+# ============================================================
+# SECRETOS Y VARIABLES DE ENTORNO
+# ============================================================
 .env
 .env.local
 .env.test
 secrets.json
 keys.json
 
-# Archivos de logs y debug
+# ============================================================
+# EDITORES E IDEs
+# ============================================================
+.vscode/
+.idea/
+*.iml
+
+# ============================================================
+# SISTEMA OPERATIVO
+# ============================================================
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# LOGS
+# ============================================================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
-
-# Archivos generados por el Sistema Operativo
-.DS_Store
-Thumbs.db
-.finance-db/

@@ -63,7 +63,7 @@ export const TradingDashboard: React.FC<DashboardProps> = memo(({
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" opacity={0.05} vertical={false} />
                             <Tooltip contentStyle={{ backgroundColor: 'var(--background-secondary)', borderRadius: '12px', border: '1px solid var(--background-modifier-border)', fontSize: '12px', fontWeight: 'bold' }}
-                                itemStyle={{ color: '#a3a3a3' }} formatter={(val: number) => [format(val, 'USD'), t('trade.stats.equity')]} labelStyle={{ color: '#888888', marginBottom: '4px' }} cursor={{ stroke: 'var(--text-muted)', strokeWidth: 1, strokeDasharray: '3 3' }} />
+                                itemStyle={{ color: '#a3a3a3' }} formatter={(val: any, name?: string) => [format(val as number, 'USD'), t('trade.stats.equity')]} labelStyle={{ color: '#888888', marginBottom: '4px' }} cursor={{ stroke: 'var(--text-muted)', strokeWidth: 1, strokeDasharray: '3 3' }} />
                             <Area type="monotone" dataKey="balance" stroke="var(--interactive-accent)" strokeWidth={3} fill="url(#colorBalance)" />
                         </AreaChart>
                     </ResponsiveContainer>
@@ -96,7 +96,7 @@ export const TradingDashboard: React.FC<DashboardProps> = memo(({
                                 <Pie data={allocation} innerRadius={45} outerRadius={60} paddingAngle={5} dataKey="value" stroke="none">
                                     {allocation.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                                 </Pie>
-                                <Tooltip formatter={(v: number) => format(v, 'USD')} contentStyle={{ backgroundColor: 'var(--background-primary)', borderRadius: '8px', border: 'none', fontSize: '10px', color: '#a3a3a3' }} itemStyle={{ color: '#a3a3a3' }} />
+                                <Tooltip formatter={(v: any, name?: string) => format(v, 'USD')} contentStyle={{ backgroundColor: 'var(--background-primary)', borderRadius: '8px', border: 'none', fontSize: '10px', color: '#a3a3a3' }} itemStyle={{ color: '#a3a3a3' }} />
                                 <Legend iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', color: '#888888' }} layout="vertical" align="right" verticalAlign="middle" />
                             </PieChart>
                         </ResponsiveContainer>
@@ -110,7 +110,7 @@ export const TradingDashboard: React.FC<DashboardProps> = memo(({
                             <BarChart width={300} height={300} data={strategies} layout="vertical" margin={{ left: 0, right: 20 }}>
                                 <XAxis type="number" hide />
                                 <YAxis dataKey="strategy" type="category" width={70} tick={{ fontSize: 9, fontWeight: 700, fill: '#888888' }} axisLine={false} tickLine={false} />
-                                <Tooltip cursor={{ fill: 'var(--background-modifier-hover)' }} contentStyle={{ backgroundColor: 'var(--background-primary)', borderRadius: '8px', border: 'none', fontSize: '10px', color: '#a3a3a3' }} itemStyle={{ color: '#a3a3a3' }} formatter={(v: number) => format(v, 'USD')} />
+                                <Tooltip cursor={{ fill: 'var(--background-modifier-hover)' }} contentStyle={{ backgroundColor: 'var(--background-primary)', borderRadius: '8px', border: 'none', fontSize: '10px', color: '#a3a3a3' }} itemStyle={{ color: '#a3a3a3' }} formatter={(v: any) => format(v, 'USD')} />
                                 <Bar dataKey="pnl" radius={[0, 4, 4, 0]} barSize={12}>
                                     {strategies.map((e, i) => <Cell key={i} fill={e.pnl >= 0 ? '#10b981' : '#f43f5e'} />)}
                                 </Bar>

@@ -20,7 +20,7 @@ export class Repository {
     private readonly BASE_PATH: string;
 
     constructor(private app: App, basePath: string) {
-        this.BASE_PATH = `${basePath}/.finance-db`;
+        this.BASE_PATH = `${basePath}/FinanceOS-Data`;
     }
 
     /**

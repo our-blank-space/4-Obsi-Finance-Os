@@ -13,7 +13,7 @@ export interface IndexData {
  */
 export class GlobalIndexer {
     private manager: ShardManager;
-    private indexPath = '.finance-db/core/index.json';
+    private indexPath = 'FinanceOS-Data/core/index.json';
     private cache: IndexData | null = null;
 
     constructor(manager: ShardManager) {

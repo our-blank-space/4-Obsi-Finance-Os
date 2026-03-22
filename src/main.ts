@@ -14,24 +14,26 @@ import { DEFAULT_DATA } from './data/defaults';
 import { MigrationManager } from './logic/MigrationManager';
 import { PersistenceService } from './services/PersistenceService';
 import { DateUtils } from './utils/date';
+import { TransactionModal } from './modals/TransactionModal';
+import { TransactionType } from './types';
 
 
 export default class FinanceOSPlugin extends Plugin {
-    data: Data.PluginData;
+    data!: Data.PluginData;
 
     // Services
-    parserService: VaultParserService;
-    ledgerService: LedgerService;
-    reportsService: ReportsService;
-    backupService: BackupService;
-    persistenceService: PersistenceService;
+    parserService!: VaultParserService;
+    ledgerService!: LedgerService;
+    reportsService!: ReportsService;
+    backupService!: BackupService;
+    persistenceService!: PersistenceService;
 
     public isInitialized = false;
-    private saveInterval: number;
+    private saveInterval!: number;
 
     // ✅ ARCHITECTURE FIX 1: Deferred Promise Pattern
     // Control estricto de concurrencia. La API pública esperará a esta señal.
-    private resolveDbReady: () => void;
+    private resolveDbReady!: () => void;
     private dbReadyPromise: Promise<void>;
 
     // ✅ ARCHITECTURE FIX 2: Centralized Debouncer
@@ -87,7 +89,7 @@ export default class FinanceOSPlugin extends Plugin {
 
     // --- FASE 1: PERSISTENCIA ---
     private async initPersistenceLayer() {
-        this.persistenceService = new PersistenceService(this.app, this.manifest.dir);
+        this.persistenceService = new PersistenceService(this.app, this.manifest.dir || '');
         await this.persistenceService.initialize();
 
         // Carga, Migración y WAL Recovery
@@ -151,12 +153,26 @@ export default class FinanceOSPlugin extends Plugin {
     // --- FASE 4: EVENTOS Y COMANDOS ---
     private initCommands() {
         this.addCommand({
-            id: 'open-quick-expense',
-            name: 'Registrar Gasto Rápido',
+            id: 'finance-os-modal-expense',
+            name: 'Registrar Gasto Rápido (Modal)',
             callback: () => {
-                // Dispatch event global para que React lo capture si está montado
-                window.dispatchEvent(new CustomEvent('finance-os-command', { detail: 'open-expense' }));
-                this.activateView();
+                new TransactionModal(this.app, this, TransactionType.EXPENSE).open();
+            }
+        });
+
+        this.addCommand({
+            id: 'finance-os-modal-income',
+            name: 'Registrar Ingreso Rápido (Modal)',
+            callback: () => {
+                new TransactionModal(this.app, this, TransactionType.INCOME).open();
+            }
+        });
+
+        this.addCommand({
+            id: 'finance-os-modal-transfer',
+            name: 'Registrar Traslado Rápido (Modal)',
+            callback: () => {
+                new TransactionModal(this.app, this, TransactionType.TRANSFER).open();
             }
         });
 
@@ -268,7 +284,7 @@ export default class FinanceOSPlugin extends Plugin {
                 await this.dbReadyPromise; // 🔒 Bloqueo de seguridad
 
                 // Ahora es seguro leer
-                const summaryPath = `${this.manifest.dir}/.finance-db/core/summaries.json`;
+                const summaryPath = `${this.manifest.dir}/FinanceOS-Data/core/summaries.json`;
                 try {
                     const file = this.app.vault.getAbstractFileByPath(normalizePath(summaryPath));
                     if (file instanceof TFile) {
@@ -306,7 +322,11 @@ export default class FinanceOSPlugin extends Plugin {
                 const normalizedPath = normalizePath(path.endsWith('.md') ? path : path + ".md");
                 const folderPath = normalizedPath.substring(0, normalizedPath.lastIndexOf('/'));
                 if (folderPath && !this.app.vault.getAbstractFileByPath(folderPath)) {
-                    try { await this.app.vault.createFolder(folderPath); } catch { }
+                    try {
+                        await this.app.vault.createFolder(folderPath);
+                    } catch (e) {
+                        console.error(`[FinanceOS] Error al intentar crear carpeta ${folderPath}`, e);
+                    }
                 }
 
                 const existing = this.app.vault.getAbstractFileByPath(normalizedPath);
@@ -327,10 +347,14 @@ export default class FinanceOSPlugin extends Plugin {
             },
             createFolder: async (path) => {
                 if (!await this.app.vault.adapter.exists(path)) {
-                    try { await this.app.vault.createFolder(path); } catch { }
+                    try {
+                        await this.app.vault.createFolder(path);
+                    } catch (e) {
+                        console.error(`[FinanceOS] Error al intentar crear carpeta ${path}`, e);
+                    }
                 }
             },
-            getBasePath: () => this.manifest.dir,
+            getBasePath: () => this.manifest.dir || '',
             fileExists: (path) => !!this.app.vault.getAbstractFileByPath(normalizePath(path)),
             searchNotes: (query) => {
                 return this.app.vault.getMarkdownFiles()
@@ -344,7 +368,11 @@ export default class FinanceOSPlugin extends Plugin {
                 const normalized = normalizePath(path);
                 const folder = normalized.substring(0, normalized.lastIndexOf('/'));
                 if (folder && !(await this.app.vault.adapter.exists(folder))) {
-                    try { await this.app.vault.createFolder(folder); } catch { }
+                    try {
+                        await this.app.vault.createFolder(folder);
+                    } catch (e) {
+                        console.error(`[FinanceOS] Error al intentar crear carpeta ${folder} para json`, e);
+                    }
                 }
                 await this.app.vault.adapter.write(normalized, JSON.stringify(data, null, 2));
             },
@@ -352,7 +380,9 @@ export default class FinanceOSPlugin extends Plugin {
                 try {
                     const f = this.app.vault.getAbstractFileByPath(normalizePath(path));
                     if (f instanceof TFile) return JSON.parse(await this.app.vault.read(f));
-                } catch { /* ignore */ }
+                } catch (e) {
+                    console.error(`[FinanceOS] Error al cargar o parsear JSON en ${path}`, e);
+                }
                 return null;
             },
             listJsonFiles: async (path) => {
@@ -375,23 +405,25 @@ export default class FinanceOSPlugin extends Plugin {
         const { workspace } = this.app;
         let leaf = workspace.getLeavesOfType(VIEW_TYPE_FINANCE)[0];
         if (!leaf) {
-            leaf = workspace.getRightLeaf(false);
-            await leaf.setViewState({ type: VIEW_TYPE_FINANCE, active: true });
+            leaf = workspace.getRightLeaf(false)!;
+            if (leaf) await leaf.setViewState({ type: VIEW_TYPE_FINANCE, active: true });
         }
-        workspace.revealLeaf(leaf);
+        if (leaf) workspace.revealLeaf(leaf);
     }
 
     private async checkSecurityRisk() {
-        // Implementación básica de verificación .gitignore
+        // Validación de .gitignore para el nuevo directorio FinanceOS-Data
         try {
             const gitIgnorePath = normalizePath('.gitignore');
             if (await this.app.vault.adapter.exists(gitIgnorePath)) {
                 const content = await this.app.vault.adapter.read(gitIgnorePath);
-                if (this.data.settings.geminiApiKey && !content.includes('data.json')) {
-                    new Notice("⚠️ SEGURIDAD: data.json no está ignorado en git.", 10000);
+                if (this.data.settings.geminiApiKey && !content.includes('FinanceOS-Data')) {
+                    new Notice("⚠️ SEGURIDAD: La carpeta FinanceOS-Data no está ignorada en git. Tu API Key podría filtrarse.", 10000);
                 }
             }
-        } catch { /* silent */ }
+        } catch (e) {
+            console.error("[FinanceOS] Error al comprobar el riesgo de seguridad", e);
+        }
     }
 
     // ✅ ARCHITECTURE FIX 3: Event Storm Protection

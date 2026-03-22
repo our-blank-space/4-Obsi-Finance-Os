@@ -25,6 +25,13 @@ describe('useProjectedIncome', () => {
             entries: [],
             updatedAt: '2023-01-01',
             liquidity: 'illiquid',
+            category: 'Real Estate',
+            isIncomeGenerating: true,
+            isDepreciating: false,
+            purchaseDate: '2023-01-01',
+            purchasePrice: 100000000,
+            currentValue: 110000000,
+            transactions: [],
             yieldProfile: {
                 frequency: 'monthly',
                 expectedAmount: 1000000,
@@ -40,6 +47,13 @@ describe('useProjectedIncome', () => {
             entries: [],
             updatedAt: '2023-01-01',
             liquidity: 'liquid',
+            category: 'Stock Market',
+            isIncomeGenerating: true,
+            isDepreciating: false,
+            purchaseDate: '2023-01-01',
+            purchasePrice: 2000,
+            currentValue: 2500,
+            transactions: [],
             yieldProfile: {
                 frequency: 'quarterly',
                 expectedAmount: 100, // 400,000 COP

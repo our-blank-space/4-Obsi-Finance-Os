@@ -21,7 +21,7 @@ export class PersistenceService {
     // private lastSnapshotHash: string = "";
 
     constructor(private app: App, basePath: string) {
-        this.BASE_PATH = `${basePath}/.finance-db`;
+        this.BASE_PATH = `${basePath}/FinanceOS-Data`;
         this.WAL_PATH = `${this.BASE_PATH}/wal/recovery.log`;
         this.SHARD_PATH = `${this.BASE_PATH}/ledger`;
         this.LEGACY_DATA_PATH = `${basePath}/data.json`;
@@ -94,7 +94,7 @@ export class PersistenceService {
             }
 
             // 2. Metadata & Summaries
-            const currentLiquidity = this.calculateLiquidity(state);
+            const currentLiquidity = this.transactionAggregator.calculateLiquidity(state);
             const summary = await this.transactionAggregator.updateSummaries(state.transactions, state.budgets);
             this.transactionAggregator.calculateRunway(summary, currentLiquidity);
 
@@ -177,7 +177,9 @@ export class PersistenceService {
                     txMap.set(cleanTx.id, cleanTx as Transaction);
                     recoveredCount++;
                 }
-            } catch { /* Skip corrupt */ }
+            } catch (e) {
+                console.error(`[FinanceOS] Omitiendo registro de mutación dañado en WAL:`, line, e);
+            }
         }
 
         if (recoveredCount > 0) {
@@ -263,7 +265,11 @@ export class PersistenceService {
             // Ensure parent dir exists (legacy safety)
             const folder = normalizedPath.substring(0, normalizedPath.lastIndexOf('/'));
             if (folder && !(await this.app.vault.adapter.exists(folder))) {
-                try { await this.app.vault.createFolder(folder); } catch { }
+                try {
+                    await this.app.vault.createFolder(folder);
+                } catch (e) {
+                    console.error(`[FinanceOS] Impossible to create base folder before atomic write ${folder}`, e);
+                }
             }
 
             await this.app.vault.adapter.write(tempPath, content);
@@ -277,7 +283,9 @@ export class PersistenceService {
         } catch (e) {
             console.error(`[AtomicWrite] Fallo en ${path}`, e);
             if (await this.app.vault.adapter.exists(tempPath)) {
-                await this.app.vault.adapter.remove(tempPath).catch(() => { });
+                await this.app.vault.adapter.remove(tempPath).catch(cleanErr => {
+                    console.error(`[AtomicWrite] No se pudo limpiar archivo temporal ${tempPath}`, cleanErr);
+                });
             }
             throw e;
         }
@@ -308,34 +316,11 @@ export class PersistenceService {
                 const c = await this.app.vault.adapter.read(path);
                 return JSON.parse(c).transactions || [];
             }
-        } catch { return []; }
-        return [];
-    }
-
-    private calculateLiquidity(data: Data.PluginData): number {
-        try {
-            const balancesMap = BalanceCalculator.compute(data.transactions, data.accountRegistry);
-            let totalInBase = 0;
-            const rates = data.exchangeRates || {};
-            const base = data.baseCurrency;
-
-            balancesMap.forEach((currencies) => {
-                currencies.forEach((amount, currency) => {
-                    if (currency === base) {
-                        totalInBase += amount;
-                    } else {
-                        const rate = rates[currency] || 0;
-                        if (rate > 0) {
-                            totalInBase += amount * rate;
-                        }
-                    }
-                });
-            });
-            return totalInBase;
         } catch (e) {
-            console.warn("Failed to calculate liquidity", e);
-            return 0;
+            console.error(`[FinanceOS] Error cargando shard de ledger de manera segura: ${path}`, e);
+            return [];
         }
+        return [];
     }
 
     /**

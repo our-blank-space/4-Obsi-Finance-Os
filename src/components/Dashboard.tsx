@@ -5,7 +5,7 @@ import {
     BarChart, Bar, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import {
-    TrendingUp, Activity, Hourglass,
+    TrendingUp, Activity, Hourglass, List,
     ArrowUpRight, ArrowDownRight, BarChart2, PieChart as PieIcon,
     Layers, Plane, Sparkles, Bot
 } from 'lucide-react';
@@ -16,6 +16,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import { useFinance } from '../context/FinanceContext';
 import { useBalances } from '../hooks/useBalances';
 import { Analytics } from '../utils/analytics';
+import { useDashboardMetrics } from '../hooks/useDashboardMetrics';
 
 // --- CONSTANTES DE DISEÑO ---
 const CATEGORY_COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#6366f1'];
@@ -38,115 +39,29 @@ export const Dashboard: React.FC = () => {
     const { t } = useTranslation();
     const { liquidTotal } = useBalances();
 
-    // ... (Memoized data logic remains identical)
-    // 1. DATA PREP
-    const fullHistory = useMemo(() =>
-        Analytics.normalizeHistory(snapshots, toBase),
-        [snapshots, toBase]);
-
-    // 2. METRICS
-    const metrics = useMemo(() => {
-        if (summaries) {
-            return {
-                current: summaries.netWorth,
-                previous: 0,
-                cagr: Analytics.calculateKPIs(fullHistory).cagr,
-                years: Analytics.calculateKPIs(fullHistory).years
-            };
-        }
-        return Analytics.calculateKPIs(fullHistory);
-    }, [fullHistory, summaries]);
-
-    // 3. RUNWAY
-    const runway = useMemo(() => {
-        let threeMonthsAvgExpense = 0;
-        if (summaries) {
-            const today = new Date();
-            let total = 0;
-            let count = 0;
-            for (let i = 1; i <= 3; i++) {
-                const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
-                const key = d.toISOString().slice(0, 7);
-                if (summaries.monthlyBreakdown[key]) {
-                    total += summaries.monthlyBreakdown[key].expense;
-                    count++;
-                }
-            }
-            threeMonthsAvgExpense = count > 0 ? total / count : 1;
-        } else {
-            const threeMonthsAgo = new Date();
-            threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-            const recentExpenses = transactions.filter(t =>
-                t.type === TransactionType.EXPENSE && new Date(t.date) >= threeMonthsAgo
-            );
-            const totalExpense = recentExpenses.reduce((s, t) => s + toBase(t.amount, t.currency), 0);
-            threeMonthsAvgExpense = totalExpense / 3 || 1;
-        }
-        return {
-            months: liquidTotal / threeMonthsAvgExpense,
-            avgExpense: threeMonthsAvgExpense
-        };
-    }, [transactions, liquidTotal, toBase, summaries]);
-
-    // 4. CASH FLOW
-    const cashFlowData = useMemo(() => {
-        const data: Record<string, { name: string, income: number, expense: number }> = {};
-        const today = new Date();
-        for (let i = 5; i >= 0; i--) {
-            const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
-            const key = d.toISOString().slice(0, 7);
-            data[key] = { name: d.toLocaleString('default', { month: 'short' }), income: 0, expense: 0 };
-        }
-        if (summaries) {
-            Object.keys(data).forEach(key => {
-                if (summaries.monthlyBreakdown[key]) {
-                    data[key].income = summaries.monthlyBreakdown[key].income;
-                    data[key].expense = summaries.monthlyBreakdown[key].expense;
-                }
-            });
-        } else {
-            transactions.forEach(t => {
-                const key = t.date.slice(0, 7);
-                if (data[key]) {
-                    const val = toBase(t.amount, t.currency);
-                    if (t.type === TransactionType.INCOME) data[key].income += val;
-                    if (t.type === TransactionType.EXPENSE) data[key].expense += val;
-                }
-            });
-        }
-        return Object.values(data);
-    }, [transactions, toBase, summaries]);
-
-    // 5. CATEGORIES
-    const categoryData = useMemo(() => {
-        if (!transactions || transactions.length === 0) return [];
-        const currentMonth = new Date().toISOString().slice(0, 7);
-        const map: Record<string, number> = {};
-        const relevantTxs = transactions.filter(t => t.type === TransactionType.EXPENSE && t.date.startsWith(currentMonth));
-        relevantTxs.forEach(t => {
-            const registryCategory = state.categoryRegistry?.find(c => c.id === t.areaId);
-            const label = registryCategory?.name || t.area || 'Sin Categoría';
-            map[label] = (map[label] || 0) + toBase(t.amount, t.currency);
-        });
-        return Object.entries(map)
-            .map(([name, value]) => ({ name, value }))
-            .sort((a, b) => b.value - a.value)
-            .slice(0, 6);
-    }, [transactions, toBase, state.categoryRegistry]);
-
-    // 6. PROJECTIONS
-    const monteCarloData = useMemo(() => {
-        if (!features.projections) return [];
-        return Analytics.generateMonteCarlo(
-            metrics.current,
-            projectionParams.years,
-            projectionParams.expectedReturn,
-            8,
-            projectionParams.inflationRate
-        );
-    }, [metrics.current, features.projections, projectionParams]);
-
-    const currentCashFlow = (cashFlowData[5]?.income || 0) - (cashFlowData[5]?.expense || 0);
+    // Hook Custom para métricas complejas (Desacople vista/logica)
+    const {
+        fullHistory,
+        metrics,
+        runway,
+        cashFlowData,
+        categoryData,
+        monteCarloData,
+        currentCashFlow,
+        recentTimeline
+    } = useDashboardMetrics(
+        {
+            transactions,
+            snapshots,
+            features,
+            projectionParams,
+            baseCurrency,
+            summaries,
+            categoryRegistry: state.categoryRegistry
+        } as any,
+        toBase,
+        liquidTotal
+    );
 
     // --- AI EVALUATOR (Logic unchanged) ---
     const [isEvaluating, setIsEvaluating] = React.useState(false);
@@ -252,7 +167,7 @@ export const Dashboard: React.FC = () => {
                                     <CartesianGrid strokeDasharray="3 3" opacity={0.1} vertical={false} stroke="var(--text-muted)" />
                                     <XAxis dataKey="name" tick={{ fontSize: 9, fill: 'var(--text-muted)', fontWeight: 600 }} axisLine={false} tickLine={false} />
                                     <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 9 }} axisLine={false} tickLine={false} />
-                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: number) => formatCompact(val, baseCurrency)} />
+                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: any) => formatCompact(val, baseCurrency)} />
                                     <Bar dataKey="income" fill="#10b981" radius={[3, 3, 0, 0]} barSize={15} />
                                     <Bar dataKey="expense" fill="#ef4444" radius={[3, 3, 0, 0]} barSize={15} />
                                 </BarChart>
@@ -274,7 +189,7 @@ export const Dashboard: React.FC = () => {
                                             <Cell key={i} fill={CATEGORY_COLORS[i % CATEGORY_COLORS.length]} stroke="transparent" />
                                         ))}
                                     </Pie>
-                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: number) => formatCompact(val, baseCurrency)} />
+                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: any) => formatCompact(val, baseCurrency)} />
                                     <Legend verticalAlign="bottom" height={36} iconType="circle" formatter={(value) => <span style={{ color: 'var(--text-normal)', fontSize: '9px', fontWeight: 600 }}>{value}</span>} wrapperStyle={{ paddingTop: '10px' }} />
                                 </PieChart>
                             </ResponsiveContainer>
@@ -299,7 +214,7 @@ export const Dashboard: React.FC = () => {
                                     <CartesianGrid strokeDasharray="3 3" opacity={0.1} vertical={false} stroke="var(--text-muted)" />
                                     <XAxis dataKey="date" tick={{ fontSize: 9, fill: 'var(--text-muted)', fontWeight: 600 }} axisLine={false} tickLine={false} minTickGap={40} />
                                     <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 9 }} axisLine={false} tickLine={false} />
-                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: number) => format(val, baseCurrency)} />
+                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: any) => format(val, baseCurrency)} />
                                     <Area type="monotone" dataKey="nominalVal" stroke="var(--interactive-accent)" strokeWidth={3} fill="url(#colorNw)" />
                                 </AreaChart>
                             </ResponsiveContainer>
@@ -330,7 +245,7 @@ export const Dashboard: React.FC = () => {
                                     <CartesianGrid strokeDasharray="3 3" opacity={0.1} vertical={false} stroke="var(--text-muted)" />
                                     <XAxis dataKey="year" tick={{ fontSize: 9, fill: 'var(--text-muted)', fontWeight: 600 }} axisLine={false} tickLine={false} />
                                     <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 9 }} axisLine={false} tickLine={false} />
-                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: number) => formatCompact(val, baseCurrency)} />
+                                    <Tooltip contentStyle={TOOLTIP_STYLE} itemStyle={{ color: 'var(--text-normal)' }} formatter={(val: any) => formatCompact(val, baseCurrency)} />
                                     <Area type="monotone" dataKey="optimistic" stroke="none" fill="#10b981" fillOpacity={0.05} />
                                     <Area type="monotone" dataKey="pessimistic" stroke="none" fill="#ef4444" fillOpacity={0.1} />
                                     <Area type="monotone" dataKey="expected" stroke="var(--interactive-accent)" strokeWidth={2} fill="none" />
@@ -339,6 +254,47 @@ export const Dashboard: React.FC = () => {
                         </div>
                     </section>
                 )}
+
+                {/* NEW: RECENT TRANSACTIONS TIMELINE (Gantt-ish Style) */}
+                <section className="lg:col-span-2 bg-[var(--background-secondary)]/30 border border-[var(--background-modifier-border)] p-6 sm:p-8 rounded-[2rem] shadow-sm">
+                    <h3 className="text-[10px] font-black uppercase text-[var(--text-muted)] tracking-widest mb-6 flex items-center gap-2">
+                        <List size={14} className="text-[var(--interactive-accent)]" /> Flujo de Caja Reciente
+                    </h3>
+                    <div className="flex flex-col gap-3">
+                        {recentTimeline.length === 0 ? (
+                            <div className="text-center text-[var(--text-muted)] text-sm py-8 font-bold">Sin transacciones recientes</div>
+                        ) : (
+                            recentTimeline.map(tx => {
+                                const isIncome = tx.type === TransactionType.INCOME;
+                                const isTransfer = tx.type === TransactionType.TRANSFER;
+                                const colorClass = isIncome ? 'border-emerald-500 bg-emerald-500/5 text-emerald-600' : isTransfer ? 'border-amber-500 bg-amber-500/5 text-amber-600' : 'border-rose-500 bg-rose-500/5 text-rose-600';
+                                const sign = isIncome ? '+' : isTransfer ? '' : '-';
+
+                                return (
+                                    <div key={tx.id} className={`flex items-center justify-between p-4 rounded-xl border-l-4 border-y border-r border-y-transparent border-r-transparent hover:border-r-[var(--background-modifier-border)] hover:border-y-[var(--background-modifier-border)] transition-all ${colorClass}`}>
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex flex-col min-w-[60px]">
+                                                <span className="text-[10px] uppercase font-bold opacity-70">{new Date(tx.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                                                <span className="text-[9px] opacity-50">{new Date(tx.date).getFullYear()}</span>
+                                            </div>
+                                            <div className="w-px h-8 bg-current opacity-20 hidden sm:block"></div>
+                                            <div className="flex flex-col mx-2 sm:mx-4">
+                                                <span className="text-sm font-bold truncate max-w-[120px] sm:max-w-xs">{tx.note || tx.area || 'Sin Descripción'}</span>
+                                                <span className="text-[10px] uppercase font-bold opacity-70 tracking-wider truncate max-w-[100px] sm:max-w-[200px]">{tx.area} • {tx.from}</span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right flex flex-col items-end">
+                                            <span className="font-mono font-black text-sm sm:text-base whitespace-nowrap">
+                                                {sign}{format(tx.amount, tx.currency)}
+                                            </span>
+                                            {tx.status === 'pending' && <span className="text-[9px] uppercase font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full mt-1">Pending</span>}
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                </section>
             </div>
         </div>
     );

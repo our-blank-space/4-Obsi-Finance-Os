@@ -35,7 +35,7 @@ export const usePortfolioMath = (assets: AssetProject[]) => {
 
         assets.forEach(asset => {
             // Usamos CurrencyMath para sumar las entradas del activo
-            const investedRaw = asset.entries
+            const investedRaw = (asset.entries || [])
                 .filter(e => e.type === 'investment' || e.type === 'expense')
                 .reduce((sum, e) => CurrencyMath.add(sum, e.amount), 0);
 
@@ -49,7 +49,7 @@ export const usePortfolioMath = (assets: AssetProject[]) => {
             totalValuation = CurrencyMath.add(totalValuation, valuation);
 
             // --- Collect Cash Flows for IRR ---
-            asset.entries.forEach(entry => {
+            (asset.entries || []).forEach(entry => {
                 const amountBase = toBase(entry.amount, asset.currency);
                 const date = new Date(entry.date);
                 if (isNaN(date.getTime())) return;

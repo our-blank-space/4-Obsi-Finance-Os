@@ -10,7 +10,7 @@ export interface AssetTransaction {
     description: string;
     amount: number;
     currency: Currency;
-    type: 'cost' | 'revenue' | 'maintenance' | 'improvement' | 'tax' | 'loan_payment';
+    type: 'cost' | 'revenue' | 'maintenance' | 'improvement' | 'tax' | 'loan_payment' | 'investment' | 'expense' | 'withdrawal';
     isRecurrent: boolean;
     category?: string;
     documents?: string[];
@@ -27,6 +27,7 @@ export interface Asset {
     category: string; // Real Estate, Vehicle, Technology, etc.
     type: string; // Subtype if needed (e.g. Motorcycle)
     currency: Currency;
+    liquidity: 'liquid' | 'semi-liquid' | 'illiquid';
 
     // Status & Logic
     status: ProjectStatus;
@@ -45,11 +46,22 @@ export interface Asset {
 
     // Activity
     transactions: AssetTransaction[];
+    entries?: AssetTransaction[]; // Legacy alias
     liability?: AssetLiability;
+
+    // Valuation & History
+    valuationHistory?: Array<{ date: string; value: number }>;
+    yieldProfile?: {
+        expectedAmount: number;
+        nextPaymentDate?: string;
+        frequency: 'monthly' | 'quarterly' | 'annually' | 'custom' | string;
+        autoLog?: boolean;
+    };
 
     // Legacy / Metadata
     notes?: string;
     location?: string;
+    wikilink?: string;
     score?: number; // For ideas
     images?: string[];
     documents?: string[];

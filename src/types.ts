@@ -77,7 +77,8 @@ export {
 export {
     CustodialTransactionType,
     CustodialAccountStatus,
-    CustodialAccount
+    CustodialAccount,
+    CustodialTransaction
 } from './types/custodial';
 
 // Assets
@@ -85,7 +86,8 @@ export {
     ProjectStatus,
     Asset,
     AssetTransaction,
-    AssetType
+    AssetType,
+    AssetProject
 } from './types/assets';
 
 // Infra

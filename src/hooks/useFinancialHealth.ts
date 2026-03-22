@@ -21,9 +21,7 @@ export const useFinancialHealth = (assets: Asset[]): HealthMetrics => {
 
         // 1. LIQUIDITY (Max 20)
         // Target: > 10% in liquid assets
-        // @ts-ignore
         const liquidValue = assets
-            // @ts-ignore
             .filter(a => a.liquidity === 'liquid' || a.liquidity === 'semi-liquid')
             .reduce((sum, a) => sum + (a.currentValue || 0), 0); // Note: Should convert currency, but MVP ok if mostly base
         // Ideally use stats.allocation or convert. 
@@ -67,7 +65,7 @@ export const useFinancialHealth = (assets: Asset[]): HealthMetrics => {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        const recentUpdate = assets.some(a => new Date(a.updatedAt) > thirtyDaysAgo);
+        const recentUpdate = assets.some(a => a.updatedAt ? new Date(a.updatedAt) > thirtyDaysAgo : false);
         let actScore = recentUpdate ? 20 : 0;
         let actStatus: 'good' | 'warning' | 'bad' = recentUpdate ? 'good' : 'warning';
 

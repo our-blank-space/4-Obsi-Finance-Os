@@ -80,6 +80,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
         const assets: Asset[] = [
           {
             id: generateId(), name: 'Apartamento Chapinero', category: 'Real Estate', type: 'real_estate', currency: 'COP', status: 'active',
+            liquidity: 'illiquid',
             isIncomeGenerating: true, isDepreciating: false,
             purchaseDate: '2021-03-01', purchasePrice: 280000000, currentValue: 320000000,
             transactions: [
@@ -93,6 +94,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
           },
           {
             id: generateId(), name: 'Acciones Tesla (TSLA)', category: 'Stock Market', type: 'stock_market', currency: 'USD', status: 'active',
+            liquidity: 'liquid',
             isIncomeGenerating: true, isDepreciating: false,
             purchaseDate: '2022-11-10', purchasePrice: 2625, currentValue: 4125,
             transactions: [
@@ -104,6 +106,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
           },
           {
             id: generateId(), name: 'Bitcoin HODLing', category: 'Crypto', type: 'crypto', currency: 'USD', status: 'active',
+            liquidity: 'semi-liquid',
             isIncomeGenerating: false, isDepreciating: false,
             purchaseDate: '2020-08-15', purchasePrice: 10850, currentValue: 33600,
             transactions: [
@@ -115,6 +118,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
           },
           {
             id: generateId(), name: 'CDT Bancolombia 180d', category: 'Fixed Income', type: 'tech', currency: 'COP', status: 'active',
+            liquidity: 'semi-liquid',
             isIncomeGenerating: true, isDepreciating: false,
             purchaseDate: '2024-11-15', purchasePrice: 10000000, currentValue: 10350000,
             transactions: [
@@ -125,6 +129,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
           },
           {
             id: generateId(), name: 'Moto Yamaha NMax', category: 'Vehicle', type: 'livestock', currency: 'COP', status: 'active',
+            liquidity: 'semi-liquid',
             isIncomeGenerating: false, isDepreciating: true,
             purchaseDate: '2023-01-15', purchasePrice: 14250000, currentValue: 12500000,
             transactions: [
@@ -136,6 +141,7 @@ const DemoSimulator: React.FC<DemoSimulatorProps> = ({ onLoadData }) => {
           },
           {
             id: generateId(), name: 'Startup SaaS Colombia', category: 'Private Equity', type: 'private_equity', currency: 'USD', status: 'idea',
+            liquidity: 'illiquid',
             isIncomeGenerating: false, isDepreciating: false,
             purchaseDate: '2024-01-01', purchasePrice: 0, currentValue: 0,
             transactions: [

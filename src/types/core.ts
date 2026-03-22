@@ -1,7 +1,7 @@
 // src/types/core.ts
 
 // Monedas y Formatos
-export type Currency = 'COP' | 'USD' | 'EUR' | 'GBP' | 'MXN' | 'BRL';
+export type Currency = 'COP' | 'USD' | 'EUR' | 'GBP' | 'MXN' | 'BRL' | 'ARS' | 'CLP' | 'PEN';
 export type Language = 'es' | 'en';
 
 // Fechas y Frecuencias
@@ -40,11 +40,16 @@ export interface FinanceAccount {
 }
 
 export enum FinanceModule {
+    DASHBOARD = 'dashboard',
+    BALANCES = 'balances',
+    LOGS = 'logs',
     RECURRENT = 'recurrent',
     BUDGETS = 'budgets',
     ASSETS = 'assets',
     REMINDERS = 'reminders',
     REVIEWS = 'reviews',
+    MONTHLY_REVIEW = 'monthly_review',
+    ANNUAL_REPORT = 'annual_report',
     TRADING = 'trading',
     LENDING = 'lending',
     DEBTS = 'debts',
@@ -52,5 +57,6 @@ export enum FinanceModule {
     SIMULATIONS = 'simulations',
     QUOTATION = 'quotation',
     CUSTODIAL = 'custodial',
-    FX = 'fx'
+    FX = 'fx',
+    GUIDE = 'guide'
 }

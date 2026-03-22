@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useReducer, useEffect, useMemo, useRef } from 'react';
 import { Data, Obsidian } from '../types';
+import { TRANSLATIONS } from '../utils/translations';
 import { dataReducer, INITIAL_DATA_STATE, DataAction, FinanceDataState } from './reducers/dataReducer';
 import { uiReducer, INITIAL_UI_STATE, UIAction, FinanceUIState } from './reducers/uiReducer';
 
@@ -182,12 +183,22 @@ export const useFinance = () => {
     // Helpers
     const getCategoryName = (idOrName: string | undefined): string => {
         if (!idOrName) return 'Sin Categoría';
+        // Localización de etiquetas de sistema
+        const dict = TRANSLATIONS[data.settings.language || 'es'];
+        if (idOrName === 'Adjustment') return dict['Adjustment'] || 'Ajuste';
+        if (idOrName === 'System') return dict['System'] || 'Sistema';
+
         const cat = data.categoryRegistry.find(c => c.id === idOrName);
         return cat ? cat.name : idOrName;
     };
 
     const getAccountName = (idOrName: string | undefined): string => {
         if (!idOrName) return 'Sin Cuenta';
+        // Localización de etiquetas de sistema
+        const dict = TRANSLATIONS[data.settings.language || 'es'];
+        if (idOrName === 'Adjustment') return dict['Adjustment'] || 'Ajuste';
+        if (idOrName === 'System') return dict['System'] || 'Sistema';
+
         const acc = data.accountRegistry.find(a => a.id === idOrName);
         return acc ? acc.name : idOrName;
     };

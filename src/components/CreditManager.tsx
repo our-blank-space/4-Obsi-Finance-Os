@@ -229,7 +229,7 @@ export const CreditManager: React.FC<Props> = ({ items = [], onUpdate, mode }) =
 
           <div className="h-[200px] w-full z-10 relative">
             <ResponsiveContainer width="100%" height="100%" minWidth={10} minHeight={10}>
-              <AreaChart data={CreditEngine.calculateSnowballProjection(items.filter(i => i.status !== 'completed'), 1500000, toBase, language).map(d => ({
+              <AreaChart data={CreditEngine.calculateSnowballProjection(items.filter(i => i.status !== 'completed'), 1500000, toBase as any, language).map(d => ({
                 ...d,
                 name: d.name === 'Actual' ? t('common.actual') : (d.name === 'Inviable' ? t('common.inviable') : d.name)
               }))}>
@@ -243,7 +243,7 @@ export const CreditManager: React.FC<Props> = ({ items = [], onUpdate, mode }) =
                 <XAxis dataKey="name" tick={{ fontSize: 10, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ backgroundColor: 'var(--background-secondary)', borderRadius: '12px', border: 'none', boxShadow: '0 8px 16px rgba(0,0,0,0.2)' }}
-                  formatter={(val: number) => [format(val, baseCurrency), t('credit.remaining_balance')]}
+                  formatter={(val: any, name?: string) => [format(val, baseCurrency), t('credit.remaining_balance')]}
                 />
                 <Area type="monotone" dataKey="balance" stroke="#ef4444" strokeWidth={3} fill="url(#colorBal)" />
               </AreaChart>

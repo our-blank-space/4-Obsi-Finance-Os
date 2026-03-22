@@ -58,7 +58,7 @@ export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, on
 
     const handleRequestDelete = (item: string) => {
         // Always use ConfirmDialog for consistent UI
-        if (onAdd && onRemove) { // Custom logic mode (for Asset Types)
+        if (onRemove) { // Custom logic mode (for Asset Types)
             setDeleteCandidate({ name: item, count: 0 }); // count: 0 = simple deletion
             return;
         }

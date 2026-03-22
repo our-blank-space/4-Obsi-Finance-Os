@@ -32,7 +32,7 @@ export class ExchangeRateService {
                 }
             }
             throw new Error('API Response invalid or not ok');
-        } catch (e) {
+        } catch (e: any) {
             console.warn(`[ExchangeRateService] API Falló o hubo Timeout (${e.message}). Usando 'Last Known Good Rates' (Resiliencia).`);
 
             // Si las tasas manuales existen, las usamos como respaldo secundario si la API falla aunque useManual sea false

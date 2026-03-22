@@ -6,7 +6,7 @@ import { DEFAULT_ACCOUNTS, DEFAULT_AREAS, DEFAULT_ASSET_TYPES } from './taxonomy
  * AXIOMAS FINANCIEROS INICIALES
  */
 export const DEFAULT_DATA: Data.PluginData = {
-    version: 11,
+    version: 12,
     // ✅ ELIMINADO: 'language' (ahora vive solo en settings)
 
     settings: {
@@ -47,7 +47,10 @@ export const DEFAULT_DATA: Data.PluginData = {
         'EUR': 4300,
         'GBP': 5000,
         'MXN': 230,
-        'BRL': 780
+        'BRL': 780,
+        'ARS': 5,
+        'CLP': 4,
+        'PEN': 1000
     },
     exchangeRate: 4000,
     baseCurrency: 'COP',
@@ -84,13 +87,12 @@ export const DEFAULT_DATA: Data.PluginData = {
 
     meta: {
         mode: 'production',
-        version: 11
+        version: 12
     },
     custodialAccounts: [],
 
     business: {
         projects: [],
-        products: [],
         sales: [],
         clients: []
     },

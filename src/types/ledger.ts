@@ -27,6 +27,7 @@ export interface Transaction {
     areaId: string;
     fromId: string;
     toId?: string;
+    status?: 'pending' | 'cleared'; // ✅ Añadido para manejo de estado
 
     // Legacy / UI Helpers
     from: string;
@@ -38,10 +39,14 @@ export interface Transaction {
     aiInsight?: string;
     wikilink?: string;
     tags?: string[];
+    recurrentId?: string;
 
     // Auditoría
     amountBase: number;
     exchangeRateSnapshot: number;
+
+    // Reconciliación
+    reconciliation?: any;
 }
 
 export interface Budget {
@@ -71,4 +76,5 @@ export interface RecurrentTransaction {
     isTrial?: boolean;
     trialEndDate?: string;
     anchorDay?: number;
+    intervalDays?: number;
 }

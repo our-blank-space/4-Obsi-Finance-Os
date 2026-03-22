@@ -4,7 +4,7 @@
     "target": "ES2020",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,

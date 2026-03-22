@@ -20,23 +20,20 @@ import { useAutoRefreshRates } from './hooks/useAutoRefreshRates'; // ✅ NUEVO 
 // UI Core
 import { NavItem } from './components/ui/NavItem';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
+import { QuickEntry } from './components/ui/QuickEntry';
 // Componentes críticos se mantienen estáticos para LCP (Largest Contentful Paint)
 import Dashboard from './components/Dashboard';
 
 // --- LAZY LOAD MODULES (Optimización de Rendimiento) ---
 // Solo cargamos el JS de estos módulos cuando el usuario hace click en ellos
 const Balances = React.lazy(() => import('./components/Balances'));
-const DailyTransactions = React.lazy(() => import('./components/DailyTransactions'));
+const DailyTransactions = React.lazy(() => import('./components/transactions/DailyTransactionsContainer').then(m => ({ default: m.DailyTransactionsContainer })));
 const Budgets = React.lazy(() => import('./components/Budgets'));
 const RecurrentTransactions = React.lazy(() => import('./components/RecurrentTransactions'));
 const TradingJournal = React.lazy(() => import('./components/TradingJournal'));
-const Lending = React.lazy(() => import('./components/Lending'));
-const Debts = React.lazy(() => import('./components/Debts'));
+const CreditManager = React.lazy(() => import('./components/CreditManager').then(m => ({ default: m.CreditManager })));
 const AssetProjects = React.lazy(() => import('./components/AssetProjects'));
-// Manejo de exportaciones nombradas para componentes que no son default
 const BusinessManager = React.lazy(() => import('./components/BusinessManager').then(m => ({ default: m.BusinessManager })));
-const ScenarioSimulator = React.lazy(() => import('./components/ScenarioSimulator').then(m => ({ default: m.ScenarioSimulator })));
-const WorkQuotation = React.lazy(() => import('./components/WorkQuotation').then(m => ({ default: m.WorkQuotation })));
 const SettingsView = React.lazy(() => import('./components/SettingsView').then(m => ({ default: m.SettingsView })));
 
 const Reminders = React.lazy(() => import('./components/Reminders'));
@@ -44,7 +41,6 @@ const MonthlyReview = React.lazy(() => import('./components/MonthlyReview'));
 const AnnualReport = React.lazy(() => import('./components/AnnualReport'));
 const CustodialAccountManager = React.lazy(() => import('./components/CustodialAccountManager'));
 const Guide = React.lazy(() => import('./components/Guide'));
-const DealCalculator = React.lazy(() => import('./components/DealCalculator'));
 const WeeklySnapshots = React.lazy(() => import('./components/WeeklySnapshots'));
 
 // Componente de Carga
@@ -110,6 +106,15 @@ const MainLayout: React.FC = () => {
         return () => window.removeEventListener('finance-os-command', handleCommand);
     }, []);
 
+    // Effect for fallback navigation if current view module is disabled
+    useEffect(() => {
+        // We ensure "settings" view is never disabled.
+        if (currentView === 'settings') return;
+        if (!enabledModules.includes(currentView as Core.FinanceModule)) {
+            setView('settings');
+        }
+    }, [currentView, enabledModules]);
+
     return (
         <div className="flex h-full bg-[var(--background-primary)] text-[var(--text-normal)] overflow-hidden w-full absolute inset-0 font-sans">
 
@@ -136,10 +141,9 @@ const MainLayout: React.FC = () => {
 
                     {/* Menú de Navegación con Scroll propio */}
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-1">
-                        <NavItem active={currentView === 'dashboard'} onClick={() => setView('dashboard')} icon={<Activity size={18} />} label={t('nav.dashboard')} />
-                        <NavItem active={currentView === 'balances'} onClick={() => setView('balances')} icon={<Wallet size={18} />} label={t('nav.balances')} />
-                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.FX)} active={currentView === 'fx'} onClick={() => setView('fx')} icon={<RefreshCw size={18} />} label={t('nav.fx')} />
-                        <NavItem active={currentView === 'logs'} onClick={() => setView('logs')} icon={<Box size={18} />} label={t('nav.logs')} /> {/* Changed Icon to Box temporarily if FileText is missing, or imported correctly */}
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.DASHBOARD)} active={currentView === 'dashboard'} onClick={() => setView('dashboard')} icon={<Activity size={18} />} label={t('nav.dashboard')} />
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.BALANCES)} active={currentView === 'balances'} onClick={() => setView('balances')} icon={<Wallet size={18} />} label={t('nav.balances')} />
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.LOGS)} active={currentView === 'logs'} onClick={() => setView('logs')} icon={<Box size={18} />} label={t('nav.logs')} /> {/* Changed Icon to Box temporarily if FileText is missing, or imported correctly */}
 
                         <div className="my-4 border-t border-[var(--background-modifier-border)] opacity-30 mx-2" />
 
@@ -150,9 +154,6 @@ const MainLayout: React.FC = () => {
                         <NavItem hidden={!enabledModules.includes(Core.FinanceModule.DEBTS)} active={currentView === 'debts'} onClick={() => setView('debts')} icon={<Receipt size={18} />} label={t('nav.debts')} />
                         <NavItem hidden={!enabledModules.includes(Core.FinanceModule.ASSETS)} active={currentView === 'assets'} onClick={() => setView('assets')} icon={<Box size={18} />} label={t('nav.assets')} />
                         <NavItem hidden={!enabledModules.includes(Core.FinanceModule.BUSINESS)} active={currentView === 'business'} onClick={() => setView('business')} icon={<ShoppingBag size={18} />} label={t('nav.business')} />
-                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.SIMULATIONS)} active={currentView === 'simulations'} onClick={() => setView('simulations')} icon={<Calculator size={18} />} label={t('nav.simulations')} />
-
-                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.QUOTATION)} active={currentView === 'quotation'} onClick={() => setView('quotation')} icon={<Briefcase size={18} />} label={t('nav.quotation')} />
 
                         <NavItem
                             hidden={!enabledModules.includes(Core.FinanceModule.REMINDERS)}
@@ -165,8 +166,8 @@ const MainLayout: React.FC = () => {
 
                         <NavItem hidden={!enabledModules.includes(Core.FinanceModule.REVIEWS)} active={currentView === 'reviews'} onClick={() => setView('reviews')} icon={<History size={18} />} label={t('nav.reviews')} />
 
-                        <NavItem active={currentView === 'monthly_review'} onClick={() => setView('monthly_review')} icon={<ClipboardCheck size={18} />} label={t('nav.monthly_review')} />
-                        <NavItem active={currentView === 'annual_report'} onClick={() => setView('annual_report')} icon={<TrendingUp size={18} />} label={t('nav.annual_report')} />
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.MONTHLY_REVIEW)} active={currentView === 'monthly_review'} onClick={() => setView('monthly_review')} icon={<ClipboardCheck size={18} />} label={t('nav.monthly_review')} />
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.ANNUAL_REPORT)} active={currentView === 'annual_report'} onClick={() => setView('annual_report')} icon={<TrendingUp size={18} />} label={t('nav.annual_report')} />
                         <NavItem hidden={!enabledModules.includes(Core.FinanceModule.CUSTODIAL)} active={currentView === 'custodial'} onClick={() => setView('custodial')} icon={<Users2 size={18} />} label={t('nav.custodial')} />
                     </div>
 
@@ -182,7 +183,7 @@ const MainLayout: React.FC = () => {
                             <Save size={14} /> {t('btn.save')}
                         </button>
 
-                        <NavItem active={currentView === 'guide'} onClick={() => setView('guide')} icon={<Book size={18} />} label={t('nav.guide')} />
+                        <NavItem hidden={!enabledModules.includes(Core.FinanceModule.GUIDE)} active={currentView === 'guide'} onClick={() => setView('guide')} icon={<Book size={18} />} label={t('nav.guide')} />
                         <NavItem active={currentView === 'settings'} onClick={() => setView('settings')} icon={<SettingsIcon size={18} />} label={t('nav.settings')} />
                     </div>
                 </div>
@@ -200,6 +201,12 @@ const MainLayout: React.FC = () => {
                     <button className="lg:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text-normal)] transition-colors" onClick={() => setIsMobileMenuOpen(true)}>
                         <Menu size={20} />
                     </button>
+
+                    <div className="flex-1 mx-4 lg:mx-8 max-w-2xl hidden sm:block">
+                        {['dashboard', 'balances', 'logs', 'fx', 'budgets', 'recurrent', 'trading', 'lending', 'debts', 'assets'].includes(currentView) && (
+                            <QuickEntry />
+                        )}
+                    </div>
 
                     {/* Indicador de Modo Demo - Compacto */}
                     {isDemo && (
@@ -219,12 +226,6 @@ const MainLayout: React.FC = () => {
                         <Suspense fallback={<LoadingSpinner />}>
                             {currentView === 'dashboard' && <Dashboard />}
                             {currentView === 'balances' && <Balances />}
-                            {currentView === 'fx' && (
-                                <DealCalculator
-                                    transactions={transactions} assets={assets} trades={trades} loans={loans} debts={debts}
-                                    baseCurrency={baseCurrency} systemExchangeRate={settings.useManualRates ? settings.manualExchangeRates['USD'] : exchangeRate} aiEnabled={features.ai} apiKey={settings.geminiApiKey}
-                                />
-                            )}
                             {currentView === 'logs' && (
                                 <div className="h-full">
                                     <DailyTransactions
@@ -255,10 +256,9 @@ const MainLayout: React.FC = () => {
                                     areas={categoryRegistry}
                                 />
                             )}
-                            {currentView === 'lending' && <Lending loans={loans} onUpdate={(newL) => dispatch({ type: 'SET_LOANS', payload: newL })} />}
-                            {currentView === 'debts' && <Debts debts={debts} onUpdate={(newD) => dispatch({ type: 'SET_DEBTS', payload: newD })} />}
+                            {currentView === 'lending' && <CreditManager items={loans} onUpdate={(newL) => dispatch({ type: 'SET_LOANS', payload: newL })} mode="lending" />}
+                            {currentView === 'debts' && <CreditManager items={debts} onUpdate={(newD) => dispatch({ type: 'SET_DEBTS', payload: newD })} mode="debt" />}
                             {currentView === 'assets' && <AssetProjects assets={assets} onUpdate={(newA) => dispatch({ type: 'SET_ASSETS', payload: newA })} />}
-                            {currentView === 'quotation' && <WorkQuotation />}
                             {currentView === 'reminders' && (
                                 <Reminders
                                     reminders={remindersList}
@@ -283,7 +283,6 @@ const MainLayout: React.FC = () => {
                             {currentView === 'settings' && <SettingsView />}
                             {currentView === 'custodial' && <CustodialAccountManager />}
                             {currentView === 'business' && <BusinessManager />}
-                            {currentView === 'simulations' && <ScenarioSimulator />}
                         </Suspense>
                     </div>
                 </main>

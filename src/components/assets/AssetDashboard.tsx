@@ -97,7 +97,7 @@ export const AssetDashboard: React.FC<Props> = ({ assets = [] }) => {
                                 ))}
                             </Pie>
                             <Tooltip
-                                formatter={(val: number) => format(val, baseCurrency)}
+                                formatter={(val: any) => format(val, baseCurrency)}
                                 contentStyle={{ backgroundColor: 'var(--background-primary)', borderRadius: '12px', border: 'none', color: 'var(--text-normal)' }}
                                 itemStyle={{ color: 'var(--text-normal)' }}
                             />

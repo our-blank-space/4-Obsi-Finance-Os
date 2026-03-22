@@ -125,7 +125,7 @@ export const useBudgetMonitor = (viewMonth: string): BudgetMonitorResult => {
 
         // Use snapshots if available (Historical Truth), otherwise use current active budgets (Present)
         const budgetsToUse: Budget[] = snapshots
-            ? snapshots.map(s => ({ ...s, id: s.areaId, area: t('bud.historical') } as Budget))
+            ? (snapshots as any[]).map(s => ({ ...s, id: s.areaId, area: t('bud.historical') } as Budget))
             : state.budgets;
 
         // 3. Resolve Transactions

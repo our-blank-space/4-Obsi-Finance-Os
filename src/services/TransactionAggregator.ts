@@ -109,6 +109,37 @@ export class TransactionAggregator {
         return summary;
     }
 
+    /**
+     * Calculates the total liquidity in the base currency based on current exchange rates.
+     */
+    public calculateLiquidity(data: { transactions: Transaction[], accountRegistry: any[], baseCurrency: string, exchangeRates?: Record<string, number> }): number {
+        try {
+            // Import BalanceCalculator dynamically or rely on it being imported at the top
+            const { BalanceCalculator } = require('../logic/balance.calculator');
+            const balancesMap = BalanceCalculator.compute(data.transactions, data.accountRegistry);
+            let totalInBase = 0;
+            const rates = data.exchangeRates || {};
+            const base = data.baseCurrency;
+
+            balancesMap.forEach((currencies: Map<string, number>) => {
+                currencies.forEach((amount: number, currency: string) => {
+                    if (currency === base) {
+                        totalInBase += amount;
+                    } else {
+                        const rate = rates[currency] || 0;
+                        if (rate > 0) {
+                            totalInBase += amount * rate;
+                        }
+                    }
+                });
+            });
+            return totalInBase;
+        } catch (e) {
+            console.warn("Failed to calculate liquidity", e);
+            return 0;
+        }
+    }
+
     private mapToSnapshots(budgets: Budget[]): any[] {
         return budgets.map(b => ({
             areaId: b.areaId || 'unknown',

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Transaction, FinanceAccount, FinanceCategory } from '../../types';
 import { Modal } from '../ui/Modal';
-import { TransactionForm } from '../logs/TransactionForm';
+import { TransactionForm } from './TransactionForm';
 
 interface QuickTransactionOverlayProps {
   transactionType: 'expense' | 'income' | 'transfer';

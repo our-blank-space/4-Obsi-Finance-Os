@@ -94,9 +94,11 @@ export class VaultParserService {
                 areaId,
                 note,
                 currency,
-                wikilink: '' // Se reconstruye en la UI si es necesario
+                wikilink: '', // Se reconstruye en la UI si es necesario
+                amountBase: amount, // Heurística: 1:1 si no hayExchangeRateService a la mano
+                exchangeRateSnapshot: 1
             };
-        } catch (e) {
+        } catch (e: any) {
             console.error("FinanceOS: Error parseando archivo:", file.path, e);
             return null;
         }

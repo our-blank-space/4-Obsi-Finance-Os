@@ -46,8 +46,8 @@ export class ReportsService {
         ];
 
         assets.forEach(asset => {
-            const costs = asset.entries.filter(e => e.type === 'cost').reduce((s, e) => s + e.amount, 0);
-            const revenue = asset.entries.filter(e => e.type === 'revenue').reduce((s, e) => s + e.amount, 0);
+            const costs = (asset.entries || []).filter(e => e.type === 'cost').reduce((s, e) => s + e.amount, 0);
+            const revenue = (asset.entries || []).filter(e => e.type === 'revenue').reduce((s, e) => s + e.amount, 0);
             const profit = revenue - costs;
             const roi = costs > 0 ? ((profit / costs) * 100).toFixed(1) + '%' : '∞';
             const statusIcon = asset.status === 'active' ? '🟢' : '📦';
@@ -64,7 +64,7 @@ export class ReportsService {
     async syncCredit(loans: Loan[], debts: Debt[]) {
         if (!loans.length && !debts.length) return;
         const filePath = normalizePath(`${this.baseFolder}/Debts-Loans.md`);
-        
+
         const lines = [
             `---`, `type: finance-credit`, `updated: ${new Date().toISOString()}`, `---`,
             ``, `# ⚖️ Deudas y Préstamos`, ``,
@@ -91,7 +91,7 @@ export class ReportsService {
     async syncTrading(trades: Trade[]) {
         if (trades.length === 0) return;
         const filePath = normalizePath(`${this.baseFolder}/Trading-Journal.md`);
-        const closed = trades.filter(t => t.status === 'closed').sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        const closed = trades.filter(t => t.status === 'closed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const totalPnL = closed.reduce((acc, t) => acc + t.pnl, 0);
 
         const lines = [
@@ -117,12 +117,12 @@ export class ReportsService {
             const file = this.app.vault.getAbstractFileByPath(path);
             if (file instanceof TFile) {
                 const currentContent = await this.app.vault.read(file);
-                
+
                 // Comparamos sin tener en cuenta la fecha de actualización
                 if (this.stripMetadata(currentContent) === this.stripMetadata(content)) {
                     return;
                 }
-                
+
                 await this.app.vault.modify(file, content);
             } else {
                 // Crear carpetas si no existen

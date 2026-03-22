@@ -48,14 +48,14 @@ export const CSVImporter: React.FC<CSVImporterProps> = ({ isOpen, onClose, onImp
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
-      complete: (results) => {
+      complete: (results: any) => {
         if (results.data.length > 0) {
           setRawRows(results.data);
           setHeaders(Object.keys(results.data[0]));
           setStep('mapping');
         }
       },
-      error: (err) => alert("Error al leer el CSV: " + err.message)
+      error: (err: any) => alert("Error al leer el CSV: " + err.message)
     });
   };
 
@@ -78,7 +78,11 @@ export const CSVImporter: React.FC<CSVImporterProps> = ({ isOpen, onClose, onImp
         to: 'none',
         type: type,
         currency: baseCurrency,
-        wikilink: ''
+        wikilink: '',
+        areaId: mapping['area'] && areas.includes(row[mapping['area']]) ? row[mapping['area']] : areas[0],
+        fromId: mapping['from'] && accounts.includes(row[mapping['from']]) ? row[mapping['from']] : accounts[0],
+        amountBase: amount || 0,
+        exchangeRateSnapshot: 1
       };
     });
 

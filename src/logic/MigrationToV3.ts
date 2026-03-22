@@ -95,7 +95,7 @@ export class MigrationToV3 {
         // 5. Normalize Budgets
         data.budgets = data.budgets.map(b => ({
             ...b,
-            areaId: b.area && categoryMap.has(b.area) ? categoryMap.get(b.area) : b.areaId
+            areaId: (b.area && categoryMap.has(b.area) ? categoryMap.get(b.area) : b.areaId) || ''
         }));
 
         // 6. Normalize Recurrents

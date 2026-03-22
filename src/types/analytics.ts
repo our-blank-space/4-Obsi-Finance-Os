@@ -1,5 +1,5 @@
-// src/types/analytics.ts
 import { Currency } from './core';
+import { Transaction, RecurrentTransaction } from './ledger';
 
 export type InsightLevel = 'critical' | 'warning' | 'healthy' | 'excellent';
 
@@ -44,4 +44,31 @@ export interface AnnualReportData {
         level: InsightLevel;
         code: string;
     };
+}
+
+export interface ProjectionMonth {
+    month: string;
+    income: number;
+    expense: number;
+    netFlow: number;
+    burnRate: number;
+    balanceStart: number;
+    balanceEnd: number;
+    alerts: Array<{
+        type: string;
+        code: string;
+        message: string;
+    }>;
+    projected?: number; // Compatibilidad con versiones anteriores si es necesario
+    actual?: number;
+}
+
+export interface BalanceProjectionInput {
+    transactions: Transaction[];
+    recurrents: RecurrentTransaction[];
+    baseCurrency: Currency;
+    initialBalance: number;
+    startDate: string; // YYYY-MM
+    horizonMonths: number;
+    toBase: (amount: number, from: Currency) => number;
 }

@@ -29,7 +29,7 @@ export class RuntimeTests {
             new Notice("✅ PRUEBAS EXITOSAS: Normalización y Persistencia funcionan.", 5000);
         } catch (e) {
             console.error("❌ TEST FAILED", e);
-            new Notice(`❌ ERROR EN PRUEBAS: ${e.message}`, 10000);
+            new Notice(`❌ ERROR EN PRUEBAS: ${(e as any).message}`, 10000);
         }
         console.log("--------------- END RUNTIME TESTS ---------------");
     }

@@ -55,16 +55,26 @@ export class BalanceCalculator {
     switch (t.type) {
       case TransactionType.INCOME:
       case TransactionType.REVALUATION:
-        update(fromKey, t.amount, t.currency);
+        // Priorizar el key que sea una cuenta real del registro para evitar balances huérfanos
+        if (toKey && !map.has(fromKey || '') && map.has(toKey)) {
+          update(toKey, t.amount, t.currency);
+        } else {
+          update(fromKey || '', t.amount, t.currency);
+        }
         break;
 
       case TransactionType.EXPENSE:
-        update(fromKey, -t.amount, t.currency);
+        // Lo mismo para gastos
+        if (toKey && !map.has(fromKey || '') && map.has(toKey)) {
+          update(toKey, -t.amount, t.currency);
+        } else {
+          update(fromKey || '', -t.amount, t.currency);
+        }
         break;
 
       case TransactionType.TRANSFER:
-        update(fromKey, -t.amount, t.currency);
-        update(toKey, t.amount, t.currency);
+        update(fromKey || '', -t.amount, t.currency);
+        update(toKey || '', t.amount, t.currency);
         break;
     }
   }

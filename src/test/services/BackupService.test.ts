@@ -65,7 +65,7 @@ const createMockData = (overrides: Partial<Data.PluginData> = {}): Data.PluginDa
     tradingTransfers: [],
     tags: [],
     custodialAccounts: [],
-    business: { products: [], sales: [], clients: [] },
+    business: { products: [], sales: [], clients: [], projects: [] },
     scenarios: [],
     ...overrides
 });

@@ -2,7 +2,7 @@ import { FinanceObsidianAPI, Transaction } from '../types';
 
 export class ShardManager {
     private api: FinanceObsidianAPI;
-    private readonly BASE_PATH = '.finance-db';
+    private readonly BASE_PATH = 'FinanceOS-Data';
 
     constructor(api: FinanceObsidianAPI) {
         this.api = api;
@@ -45,10 +45,19 @@ export class ShardManager {
         });
     }
 
-    async loadShard(month: string): Promise<Transaction[]> {
-        const path = `${this.BASE_PATH}/ledger/${month}.json`;
-        const data = await this.api.readJson<{ transactions: Transaction[] }>(path);
-        return data?.transactions || [];
+    async loadShard<T = Transaction[]>(path: string): Promise<T | null> {
+        // Handle absolute or relative paths
+        const fullPath = path.startsWith(this.BASE_PATH) ? path : `${this.BASE_PATH}/${path}`;
+        try {
+            return await this.api.readJson<T>(fullPath);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    async saveShard<T>(path: string, data: T): Promise<void> {
+        const fullPath = path.startsWith(this.BASE_PATH) ? path : `${this.BASE_PATH}/${path}`;
+        await this.api.writeJson(fullPath, data);
     }
 
     // Compatibility method for GlobaIndexer or other legacy services

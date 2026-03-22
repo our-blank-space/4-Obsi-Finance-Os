@@ -1,4 +1,5 @@
-import { Currency, RecurrentTransaction, AssetProject, TransactionType } from '../../types';
+import { Currency, AssetProject, TransactionType } from '../../types';
+import { RecurrentTransaction } from '../../types/ledger';
 import { BalanceProjectionInput, ProjectionMonth } from '../../types/analytics';
 import { RecurrentEngine } from './RecurrentEngine';
 
@@ -10,7 +11,7 @@ export const BalanceProjectionEngine = {
     let currentBalance = input.initialBalance;
     let currentMonth = input.startDate;
 
-    for (let i = 0; i < input.months; i++) {
+    for (let i = 0; i < input.horizonMonths; i++) {
 
       const burnRate = RecurrentEngine.calculateMonthlyBurnRate(
         input.recurrents,
@@ -24,7 +25,7 @@ export const BalanceProjectionEngine = {
       const balanceStart = currentBalance;
       const balanceEnd = balanceStart + netFlow;
 
-      const alerts = [];
+      const alerts: Array<{ type: string; code: string; message: string; }> = [];
 
       if (balanceEnd < 0) {
         alerts.push({
@@ -34,7 +35,7 @@ export const BalanceProjectionEngine = {
         });
       }
 
-      timeline.push({
+      const monthData: ProjectionMonth = {
         month: currentMonth,
         income,
         expense,
@@ -43,7 +44,9 @@ export const BalanceProjectionEngine = {
         balanceStart,
         balanceEnd,
         alerts
-      });
+      };
+
+      timeline.push(monthData);
 
       currentBalance = balanceEnd;
       currentMonth = incrementMonth(currentMonth);
@@ -57,6 +60,9 @@ export const BalanceProjectionEngine = {
 
 function incrementMonth(month: string): string {
   const [y, m] = month.split('-').map(Number);
-  const date = new Date(y, m, 1);
-  return date.toISOString().slice(0, 7);
+  const date = new Date(y, m - 1, 1); // JS months are 0-indexed
+  date.setMonth(date.getMonth() + 1);
+  const nextY = date.getFullYear();
+  const nextM = date.getMonth() + 1;
+  return `${nextY}-${nextM.toString().padStart(2, '0')}`;
 }

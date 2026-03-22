@@ -50,7 +50,7 @@ export const INITIAL_DATA_STATE: FinanceDataState = {
     tags: [],
     meta: { mode: 'production', version: 10 },
     custodialAccounts: [],
-    business: { products: [], sales: [], clients: [] },
+    business: { sales: [], clients: [], projects: [] },
     scenarios: [],
     history: []
 };

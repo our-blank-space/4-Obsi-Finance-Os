@@ -163,7 +163,7 @@ export const CustodialAccountManager: React.FC = () => {
                                                     <Clock size={12} /> {daysRemaining <= 0 ? 'Vencido' : `Vence en ${daysRemaining} días`}
                                                 </div>
                                             )}
-                                            {account.interestRate > 0 && (
+                                            {(account.interestRate || 0) > 0 && (
                                                 <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-emerald-500">
                                                     <AlertCircle size={12} /> Rendimiento: {account.interestRate}%
                                                 </div>

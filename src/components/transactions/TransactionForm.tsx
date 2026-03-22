@@ -8,13 +8,16 @@ import { TransactionType } from '../../types';
 import { useObsidianLink } from '../../hooks/useObsidian';
 import { useFinance } from '../../context/FinanceContext';
 import { useTranslation } from '../../hooks/useTranslation';
-import { FileText } from 'lucide-react';
+import { useBalances } from '../../hooks/useBalances';
+import { validateTransaction, checkOverdraft } from '../../logic/validators';
+import { FileText, AlertTriangle } from 'lucide-react';
 import { generateUUID } from '../../utils/uuid';
 
-export const TransactionForm = ({ initialData, onSave, onCancel }: any) => {
+export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: any) => {
   const { createTransactionNote } = useObsidianLink();
   const { state } = useFinance();
   const { t } = useTranslation();
+  const { balances } = useBalances(); // Obtener saldos
   const { baseCurrency, accountRegistry, categoryRegistry } = state;
 
   // Options from Registries - Clean implementation (no fallbacks needed after MigrationManager)
@@ -23,7 +26,7 @@ export const TransactionForm = ({ initialData, onSave, onCancel }: any) => {
 
   const [formData, setFormData] = useState(initialData || {
     date: new Date().toISOString().slice(0, 10),
-    type: TransactionType.EXPENSE,
+    type: initialType || TransactionType.EXPENSE,
     amount: '',
     fromId: accountRegistry[0]?.id || '',
     areaId: categoryRegistry[0]?.id || '',
@@ -32,31 +35,69 @@ export const TransactionForm = ({ initialData, onSave, onCancel }: any) => {
     area: categoryRegistry[0]?.name || '',
     note: '',
     currency: baseCurrency,
-    toId: initialData?.toId || ''
+    toId: '',
+    status: 'cleared'
   });
+
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [overdraftWarning, setOverdraftWarning] = useState<string | null>(null);
 
   // Sync Legacy Fields on ID Change
   useEffect(() => {
     if (formData.fromId) {
       const acc = accountRegistry.find(a => a.id === formData.fromId);
-      if (acc && acc.name !== formData.from) setFormData(prev => ({ ...prev, from: acc.name }));
+      if (acc && acc.name !== formData.from) setFormData((prev: any) => ({ ...prev, from: acc.name }));
     }
     if (formData.areaId) {
       const cat = categoryRegistry.find(c => c.id === formData.areaId);
-      if (cat && cat.name !== formData.area) setFormData(prev => ({ ...prev, area: cat.name }));
+      if (cat && cat.name !== formData.area) setFormData((prev: any) => ({ ...prev, area: cat.name }));
     }
   }, [formData.fromId, formData.areaId, accountRegistry, categoryRegistry]);
 
   // Default to user setting
   const [createNote, setCreateNote] = useState(state.settings.createNoteOnLog ?? false);
 
+  // Validate on change
+  useEffect(() => {
+    const numericAmount = parseFloat(formData.amount.toString().replace(/[^0-9.-]/g, '')) || 0;
+    
+    // Check Overdraft
+    if (formData.type === TransactionType.EXPENSE || formData.type === TransactionType.TRANSFER) {
+      const accountBalanceObj = balances[formData.fromId];
+      // Type casting to any to bypass TS complaints about dynamic indexing if Currency isn't fully matched, but it exists
+      const currentBalance = accountBalanceObj ? ((accountBalanceObj as any)[formData.currency] || 0) : 0;
+
+      const overdraft = checkOverdraft(numericAmount, currentBalance);
+      if (overdraft.isOverdraft) {
+        setOverdraftWarning(`Overdraft Warning: El saldo quedará en negativo por ${Math.abs(overdraft.remaining).toLocaleString()}`);
+      } else {
+        setOverdraftWarning(null);
+      }
+    } else {
+      setOverdraftWarning(null);
+    }
+  }, [formData.amount, formData.fromId, formData.type, formData.currency, balances]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const numericAmount = parseFloat(formData.amount.toString().replace(/[^0-9.-]/g, ''));
     if (!formData.amount || isNaN(numericAmount) || numericAmount <= 0) {
+      setValidationErrors(["Amount must be greater than 0"]);
       return;
     }
+
+    const { isValid, errors } = validateTransaction(
+      { ...formData, amount: numericAmount },
+      baseCurrency
+    );
+
+    if (!isValid) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    setValidationErrors([]);
 
     const transactionData = {
       ...formData,
@@ -83,6 +124,18 @@ export const TransactionForm = ({ initialData, onSave, onCancel }: any) => {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
+      {validationErrors.length > 0 && (
+        <div className="bg-rose-500/10 border border-rose-500/30 text-rose-500 p-3 rounded-xl text-xs font-bold flex flex-col gap-1">
+          {validationErrors.map((err, idx) => (
+             <span key={idx} className="flex items-center gap-1"><AlertTriangle size={12}/> {err}</span>
+          ))}
+        </div>
+      )}
+      {overdraftWarning && (
+        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-3 rounded-xl text-xs font-bold flex items-center gap-2">
+          <AlertTriangle size={14}/> {overdraftWarning}
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
         <Input label={t('logs.form.date')} type="date" value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
         <SelectStyled

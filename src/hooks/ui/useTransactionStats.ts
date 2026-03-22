@@ -1,24 +1,15 @@
 import { useMemo } from 'react';
 import { Transaction, TransactionType } from '../../types';
 
-export const useTransactionStats = (
-  filteredTransactions: Transaction[],
-  toBase: (amount: number, currency: any) => number
-) => {
-  return useMemo(() => {
-    let incomeTotal = 0;
-    let expenseTotal = 0;
-
-    filteredTransactions.forEach((t) => {
-      const val = toBase(t.amount, t.currency);
-      if (t.type === TransactionType.INCOME) incomeTotal += val;
-      if (t.type === TransactionType.EXPENSE) expenseTotal += val;
-    });
-
-    return {
-      income: incomeTotal,
-      expense: expenseTotal,
-      net: incomeTotal - expenseTotal,
-    };
-  }, [filteredTransactions, toBase]);
+export const useTransactionStats = (transactions: Transaction[], toBase: (amount: number, currency: string) => number) => {
+    return useMemo(() => {
+        let income = 0;
+        let expense = 0;
+        transactions.forEach(t => {
+            const val = toBase(t.amount, t.currency);
+            if (t.type === TransactionType.INCOME) income += val;
+            if (t.type === TransactionType.EXPENSE) expense += val;
+        });
+        return { income, expense, net: income - expense };
+    }, [transactions, toBase]);
 };
