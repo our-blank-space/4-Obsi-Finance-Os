@@ -95,29 +95,29 @@ export const RecurrentFormModal: React.FC<Props> = ({ isOpen, initialData, onClo
         <Modal isOpen={isOpen} onClose={onClose} title={initialData ? t('rec.form.title_edit') : t('rec.form.title_new')}>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Selector de Tipo */}
-                <div className="space-y-1.5 mb-4">
-                    <label className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">
-                        {t('rec.form.type')}
-                    </label>
-                    <div className="flex bg-[var(--background-modifier-form-field)] p-1 rounded-xl border border-[var(--background-modifier-border)]">
-                        <button
-                            type="button"
-                            onClick={() => setForm({ ...form, type: TransactionType.INCOME })}
-                            className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all ${form.type === TransactionType.INCOME
-                                ? 'bg-emerald-600 text-white shadow-md'
-                                : 'text-[var(--text-muted)] hover:bg-[var(--background-secondary)]'
-                                }`}
-                        >
-                            {t('label.income')}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setForm({ ...form, type: TransactionType.EXPENSE })}
-                            className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all ${form.type === TransactionType.EXPENSE
-                                ? 'bg-rose-600 text-white shadow-md'
-                                : 'text-[var(--text-muted)] hover:bg-[var(--background-secondary)]'
-                                }`}
-                        >
+        <div className="space-y-1.5 mb-4">
+            <label className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1">
+                {t('rec.form.type')}
+            </label>
+            <div className="flex bg-[var(--background-modifier-form-field)] p-1 rounded-xl border border-[var(--background-modifier-border)]">
+                <button
+                    type="button"
+                    onClick={() => setForm({ ...form, type: TransactionType.INCOME })}
+                    className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all ${form.type === TransactionType.INCOME
+                        ? 'bg-emerald-500 text-white shadow-md'
+                        : 'text-[var(--text-muted)] hover:bg-[var(--background-secondary)]'
+                        }`}
+                >
+                    {t('label.income')}
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setForm({ ...form, type: TransactionType.EXPENSE })}
+                    className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all ${form.type === TransactionType.EXPENSE
+                        ? 'bg-rose-500 text-white shadow-md'
+                        : 'text-[var(--text-muted)] hover:bg-[var(--background-secondary)]'
+                        }`}
+                >
                             {t('label.expense')}
                         </button>
                     </div>

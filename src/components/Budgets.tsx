@@ -16,7 +16,7 @@ import { BudgetInspectorModal } from './modals/BudgetInspectorModal';
 // --- MAIN COMPONENT ---
 
 export const Budgets = () => {
-  const { state, dispatch } = useFinance();
+  const { state, dispatch, saveDataNow } = useFinance();
   const { t } = useTranslation();
   const [viewMonth, setViewMonth] = useState(new Date().toISOString().slice(0, 7));
   const { income, expenses, summary, status } = useBudgetMonitor(viewMonth);
@@ -35,10 +35,20 @@ export const Budgets = () => {
     } else {
       dispatch({ type: 'ADD_BUDGET', payload: budget });
     }
+    setTimeout(() => saveDataNow(), 100);
   };
 
   const handleDelete = (id: string) => {
     dispatch({ type: 'DELETE_BUDGET', payload: id });
+    setTimeout(() => saveDataNow(), 100);
+  };
+
+  const handleDrop = (budgetId: string, newType: BudgetType) => {
+    const budget = state.budgets.find(b => b.id === budgetId);
+    if (budget && budget.type !== newType) {
+      dispatch({ type: 'UPDATE_BUDGET', payload: { ...budget, type: newType } });
+      setTimeout(() => saveDataNow(), 100);
+    }
   };
 
   return (
@@ -78,6 +88,7 @@ export const Budgets = () => {
             categories={state.categoryRegistry}
             onSave={handleSave}
             onDelete={handleDelete}
+            onDropItem={(id: string) => handleDrop(id, BudgetType.INCOME)}
             monthProgress={summary.monthProgress}
           />
           <BudgetSection
@@ -87,6 +98,7 @@ export const Budgets = () => {
             categories={state.categoryRegistry}
             onSave={handleSave}
             onDelete={handleDelete}
+            onDropItem={(id: string) => handleDrop(id, BudgetType.EXPENSE)}
             monthProgress={summary.monthProgress}
             isExpense={true}
           />
@@ -123,7 +135,7 @@ const HealthWidget = ({ summary, runway }: { summary: any, runway: number }) => 
   );
 };
 
-const BudgetSection = ({ title, type, items, categories, onSave, onDelete, monthProgress, isExpense }: any) => {
+const BudgetSection = ({ title, type, items, categories, onSave, onDelete, onDropItem, monthProgress, isExpense }: any) => {
   const { format, baseCurrency } = useCurrency();
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -190,13 +202,25 @@ const BudgetSection = ({ title, type, items, categories, onSave, onDelete, month
   const HeaderIcon = isIncome ? TrendingUp : AlertTriangle;
   const headerColor = isIncome ? "text-emerald-500" : "text-rose-500";
 
+  const [isDragOver, setIsDragOver] = useState(false);
+
   return (
-    <section className="flex flex-col h-full">
-      <div className="flex justify-between items-center mb-4">
+    <section 
+      className={`flex flex-col h-full rounded-2xl transition-all ${isDragOver ? 'bg-[var(--background-modifier-hover)] ring-2 ring-[var(--interactive-accent)] ring-offset-[var(--background-primary)]' : ''}`}
+      onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+      onDragLeave={() => setIsDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDragOver(false);
+        const id = e.dataTransfer.getData('budgetId');
+        if (id && onDropItem) onDropItem(id);
+      }}
+    >
+      <div className="flex justify-between items-center mb-4 px-2 pt-2">
         <h2 className="text-sm font-black uppercase text-[var(--text-muted)] flex items-center gap-2">
           <HeaderIcon size={14} className={headerColor} /> {title}
         </h2>
-        <Button onClick={openCreate} size="sm" variant="ghost" icon={<Plus size={14} />}>{t('btn.add')}</Button>
+        <Button onClick={openCreate} size="sm" intent="create" icon={<Plus size={14} />}>{t('btn.add')}</Button>
       </div>
 
       <div className="grid grid-cols-1 gap-4">
@@ -238,7 +262,7 @@ const BudgetSection = ({ title, type, items, categories, onSave, onDelete, month
           </div>
           <ModalFooter>
             <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>{t('btn.cancel')}</Button>
-            <Button type="submit">{t('btn.save')}</Button>
+            <Button type="submit" intent="save">{t('btn.save')}</Button>
           </ModalFooter>
         </form>
       </Modal>
@@ -283,13 +307,43 @@ const BudgetCard = ({ data, format, monthProgress, onClick, onEdit, onDelete }: 
   if (status === 'success') statusTextColor = 'text-emerald-500';
 
   return (
-    <div onClick={onClick} className="bg-[var(--background-secondary)] border p-4 rounded-2xl relative group hover:border-[var(--text-normal)] cursor-pointer shadow-sm transition-all border-[var(--background-modifier-border)]">
+    <div 
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData('budgetId', data.id);
+        // Efecto visual al arrastrar
+        if (e.target instanceof HTMLElement) {
+           e.target.style.opacity = '0.5';
+        }
+      }}
+      onDragEnd={(e) => {
+        if (e.target instanceof HTMLElement) {
+           e.target.style.opacity = '1';
+        }
+      }}
+      onClick={onClick} 
+      className="bg-[var(--background-secondary)] cursor-grab active:cursor-grabbing border p-4 rounded-2xl relative group hover:border-[var(--text-normal)] shadow-sm transition-all border-[var(--background-modifier-border)]"
+    >
 
       {/* Action Buttons (Hover) */}
-      <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-20 bg-[var(--background-primary)] rounded-lg shadow-sm border border-[var(--background-modifier-border)]">
-        <button onClick={onEdit} className="p-1.5 hover:bg-[var(--background-modifier-hover)] rounded-l-lg"><Edit2 size={12} /></button>
-        <div className="w-[1px] bg-[var(--background-modifier-border)] h-full"></div>
-        <button onClick={onDelete} className="p-1.5 hover:text-rose-500 rounded-r-lg"><Trash2 size={12} /></button>
+      <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-20 bg-[var(--background-primary)] rounded-lg shadow-sm border border-[var(--background-modifier-border)] overflow-hidden">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onEdit} 
+          className="p-1.5 h-8 w-8 rounded-none border-none hover:bg-[var(--background-modifier-hover)] text-[var(--text-muted)] hover:text-[var(--text-normal)]"
+        >
+          <Edit2 size={12} />
+        </Button>
+        <div className="w-[1px] bg-[var(--background-modifier-border)] h-6 self-center"></div>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onDelete} 
+          className="p-1.5 h-8 w-8 rounded-none border-none hover:bg-rose-500/10 hover:text-rose-500 text-[var(--text-muted)]"
+        >
+          <Trash2 size={12} />
+        </Button>
       </div>
 
       <div className="flex justify-between items-start mb-2">

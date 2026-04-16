@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
    1. SYSTEM DEFINITIONS
 ========================================================= */
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'ghost' | 'outline';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'ghost' | 'outline';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 export type ButtonIntent = 'save' | 'destructive' | 'create' | 'navigation' | 'neutral';
 
@@ -37,6 +37,7 @@ const variants: Record<ButtonVariant, string> = {
   secondary: "bg-[var(--background-secondary)] hover:bg-[var(--background-modifier-hover)] text-[var(--text-muted)] hover:text-[var(--text-normal)] border-[var(--background-modifier-border)] focus:ring-[var(--text-muted)]",
   success: "bg-emerald-600 hover:bg-emerald-500 text-white border-transparent shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/40 focus:ring-emerald-500",
   danger: "bg-rose-600 hover:bg-rose-500 text-white border-transparent shadow-lg shadow-rose-900/20 hover:shadow-rose-900/40 focus:ring-rose-500",
+  warning: "bg-amber-500 hover:bg-amber-400 text-white border-transparent shadow-lg shadow-amber-900/20 hover:shadow-amber-900/40 focus:ring-amber-500",
   outline: "bg-transparent border-[var(--background-modifier-border)] text-[var(--text-muted)] hover:text-[var(--text-normal)] hover:border-[var(--text-normal)] focus:ring-[var(--text-muted)]",
   ghost: "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text-normal)] hover:bg-[var(--background-modifier-hover)] focus:ring-[var(--text-muted)]",
 };

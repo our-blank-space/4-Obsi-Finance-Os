@@ -47,7 +47,7 @@ export const SmartCloseModal: React.FC<Props> = ({
 
                 <ModalFooter>
                     <Button variant="secondary" onClick={onClose}>{t('btn.cancel')}</Button>
-                    <Button onClick={() => onConfirm(parseFloat(price), parseFloat(fees), note, parseFloat(closeAmount))} variant="danger">
+                    <Button onClick={() => onConfirm(parseFloat(price), parseFloat(fees), note, parseFloat(closeAmount))} variant="success">
                         {t('trade.modal.close.exec')}
                     </Button>
                 </ModalFooter>

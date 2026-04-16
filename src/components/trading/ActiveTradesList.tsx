@@ -50,9 +50,9 @@ export const ActiveTradesList: React.FC<Props> = ({ trades, onClosePosition, onE
                                     subtext={`${trade.pnlPercentage.toFixed(2)}%`} />
                             </div>
                             <div className="flex gap-2">
-                                <Button variant="outline" size="sm" onClick={() => onClosePosition(trade.id)}><Lock size={14} className="mr-1" /> {t('trade.action.close')}</Button>
+                                <Button intent="save" size="sm" onClick={() => onClosePosition(trade.id)}><Lock size={14} className="mr-1" /> {t('trade.action.close')}</Button>
                                 <Button variant="ghost" size="icon" onClick={() => onEdit(trade.id)}><Edit2 size={14} /></Button>
-                                <Button variant="ghost" size="icon" onClick={() => onDelete(trade.id)} className="text-rose-500"><Trash2 size={14} /></Button>
+                                <Button variant="danger" size="icon" onClick={() => onDelete(trade.id)} className="border-none shadow-none"><Trash2 size={14} /></Button>
                             </div>
                         </div>
                     </div>

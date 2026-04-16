@@ -161,8 +161,8 @@ const Reminders: React.FC<RemindersProps> = ({
           <p className="text-[var(--text-muted)] mt-1 text-sm font-medium">{t('rem.subtitle')}</p>
         </div>
         <div className="flex gap-2 w-full md:w-auto">
-          <Button variant="secondary" onClick={() => setShowMagic(true)} icon={<Sparkles size={16} className="text-sky-500" />}>{t('common.ai_magic')}</Button>
-          <Button onClick={() => setShowForm(true)} icon={<Plus size={18} />}>{t('rem.new')}</Button>
+          <Button variant="outline" onClick={() => setShowMagic(true)} icon={<Sparkles size={16} className="text-sky-500" />}>{t('common.ai_magic')}</Button>
+          <Button onClick={() => setShowForm(true)} intent="create" icon={<Plus size={18} />}>{t('rem.new')}</Button>
         </div>
       </header>
 
@@ -175,7 +175,7 @@ const Reminders: React.FC<RemindersProps> = ({
               <div key={r.id} className="group bg-[var(--background-secondary)] border border-[var(--background-modifier-border)] rounded-2xl p-4 flex items-center gap-4 hover:border-[var(--text-normal)] transition-all shadow-sm">
                 <button 
                   onClick={() => onToggle(r.id)} 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-[var(--text-muted)] hover:text-emerald-500 hover:bg-emerald-500/10 transition-all border-2 border-[var(--background-modifier-border)] group-hover:border-[var(--text-normal)]"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-[var(--text-muted)] hover:text-white hover:bg-emerald-500 transition-all border-2 border-[var(--background-modifier-border)] hover:border-emerald-500"
                   aria-label="Marcar como completado"
                 >
                   <Circle size={20} />
@@ -248,13 +248,15 @@ const Reminders: React.FC<RemindersProps> = ({
                     <h3 className="text-sm font-bold text-[var(--text-muted)] line-through truncate">{r.title}</h3>
                     <div className="text-[10px] text-[var(--text-faint)] font-medium">Done: {r.dueDate}</div>
                   </div>
-                  <button 
+                  <Button 
                     onClick={() => setDeleteId(r.id)} 
-                    className="p-2 text-[var(--text-muted)] hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-all"
+                    variant="danger"
+                    size="icon"
+                    className="h-8 w-8 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                     aria-label="Eliminar del historial"
                   >
                     <Trash2 size={14} />
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>
@@ -296,7 +298,7 @@ const Reminders: React.FC<RemindersProps> = ({
           </div>
           <ModalFooter>
             <Button variant="secondary" onClick={() => setShowForm(false)} type="button">{t('btn.cancel')}</Button>
-            <Button type="submit">{t('btn.save')}</Button>
+            <Button type="submit" intent="save">{t('btn.save')}</Button>
           </ModalFooter>
         </form>
       </Modal>

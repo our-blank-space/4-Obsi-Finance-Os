@@ -4,13 +4,18 @@ import { Terminal, ArrowRight, ShoppingCart, Banknote, Wallet, Tag, Repeat, Chev
 import { useFinance } from '../../context/FinanceContext';
 import { parseQuickEntry, parseAmountAndDescription } from '../../logic/quickEntryParser';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useBalances } from '../../hooks/useBalances';
+import { useCurrency } from '../../hooks/useCurrency';
 import { Ledger } from '../../types';
 import { generateUUID } from '../../utils/uuid';
 import { Notice } from 'obsidian';
+import { SelectStyled } from './SelectStyled';
 
 export const QuickEntry: React.FC = () => {
     const { state, dispatch, saveDataNow } = useFinance();
     const { t } = useTranslation();
+    const { balances } = useBalances();
+    const { convert } = useCurrency();
     const { categoryRegistry, accountRegistry, baseCurrency } = state;
 
     const [input, setInput] = useState('');
@@ -91,6 +96,30 @@ export const QuickEntry: React.FC = () => {
             return;
         }
 
+        // ============================================
+        // 👉 PROTECCIÓN CONTRA SALDOS NEGATIVOS 👈
+        // ============================================
+        if (type === Ledger.TransactionType.EXPENSE || type === Ledger.TransactionType.TRANSFER) {
+            const accountBalanceObj = balances[fromId] as any;
+            
+            // Convertir cada divisa a base y sumar para saldo real disponible
+            let currentBalanceBase = 0;
+            if (accountBalanceObj) {
+                Object.entries(accountBalanceObj).forEach(([curr, amt]: any) => {
+                    currentBalanceBase += convert(Number(amt) || 0, curr, baseCurrency);
+                });
+            }
+            
+            // Bloquear si: ya tiene saldo negativo, O si el monto supera el disponible
+            if (currentBalanceBase <= 0 || finalAmount > currentBalanceBase) {
+                const disponible = Math.max(0, currentBalanceBase);
+                const faltante = (finalAmount - disponible).toLocaleString('es-CO', { maximumFractionDigits: 0 });
+                new Notice(`⚠️ Saldo insuficiente en "${fromAccount.name}". Faltan $${faltante} ${baseCurrency}.`);
+                return; // ⛔ Abortar registro
+            }
+        }
+        // ============================================
+
         const newTransaction: Ledger.Transaction = {
             id: generateUUID(),
             date: new Date().toISOString().slice(0, 10),
@@ -125,7 +154,7 @@ export const QuickEntry: React.FC = () => {
     const theme = typeThemes[type] || typeThemes[Ledger.TransactionType.EXPENSE];
 
     return (
-        <div className="flex items-center gap-2 p-1 bg-[var(--background-primary)] border border-[var(--background-modifier-border)] rounded-full shadow-lg backdrop-blur-md w-full focus-within:border-[var(--interactive-accent)] transition-all max-w-2xl mx-auto overflow-hidden">
+        <div className="flex items-center gap-2 p-1 bg-[var(--background-primary)] border border-[var(--background-modifier-border)] rounded-full shadow-lg backdrop-blur-md w-full focus-within:border-[var(--interactive-accent)] transition-all max-w-2xl mx-auto">
             
             {/* 1. PILL DE TIPO */}
             <button 
@@ -139,44 +168,56 @@ export const QuickEntry: React.FC = () => {
             </button>
 
             {/* 2. SELECTOR DE CUENTA */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--background-secondary)]/50 rounded-full border border-[var(--background-modifier-border)] hover:border-[var(--interactive-accent)]/30 transition-colors shrink-0">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[var(--background-secondary)]/50 rounded-lg border border-[var(--background-modifier-border)] hover:border-[var(--interactive-accent)]/50 transition-colors shrink-0">
                 <Wallet size={12} className="text-[var(--text-muted)]" />
-                <select 
+                <SelectStyled 
+                    variant="compact"
                     value={fromId} 
-                    onChange={(e) => setFromId(e.target.value)}
-                    className="bg-transparent border-none p-0 text-[10px] font-black uppercase tracking-tight text-[var(--text-normal)] outline-none min-w-[70px] cursor-pointer"
-                >
-                   {accountRegistry.map(acc => <option key={acc.id} value={acc.id} className="bg-[var(--background-primary)]">{acc.name}</option>)}
-                </select>
+                    onChange={(val) => setFromId(val)}
+                    options={accountRegistry.map(acc => ({ value: acc.id, label: acc.name }))}
+                    className="bg-transparent border-none p-0 text-[10px] font-bold tracking-tight text-[var(--text-normal)] outline-none min-w-[70px] cursor-pointer"
+                />
             </div>
 
             {/* SI ES TRASLADO: SELECTOR DESTINO */}
             {type === Ledger.TransactionType.TRANSFER && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/5 rounded-full border border-amber-500/20 hover:border-amber-500/50 transition-colors shrink-0 animate-in slide-in-from-left-2 shadow-sm">
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-500/5 rounded-lg border border-amber-500/20 hover:border-amber-500/50 transition-colors shrink-0 animate-in slide-in-from-left-2 shadow-sm">
                     <ArrowRight size={12} className="text-amber-500" />
-                    <select 
+                    <SelectStyled 
+                        variant="compact"
                         value={toId} 
-                        onChange={(e) => setToId(e.target.value)}
-                        className="bg-transparent border-none p-0 text-[10px] font-black uppercase tracking-tight text-[var(--text-normal)] outline-none min-w-[70px] cursor-pointer"
-                    >
-                        <option value="" className="bg-[var(--background-primary)]">Destino</option>
-                       {accountRegistry.filter(a => a.id !== fromId).map(acc => <option key={acc.id} value={acc.id} className="bg-[var(--background-primary)]">{acc.name}</option>)}
-                    </select>
+                        onChange={(val) => setToId(val)}
+                        options={[
+                            { value: '', label: 'Destino' },
+                            ...accountRegistry.filter(a => a.id !== fromId).map(acc => ({ value: acc.id, label: acc.name }))
+                        ]}
+                        className="bg-transparent border-none p-0 text-[10px] font-bold tracking-tight text-[var(--text-normal)] outline-none min-w-[70px] cursor-pointer"
+                    />
                 </div>
             )}
 
             {/* 3. SELECTOR DE CATEGORIA (OCULTO EN TRASLADOS) */}
             {type !== Ledger.TransactionType.TRANSFER && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--background-secondary)]/50 rounded-full border border-[var(--background-modifier-border)] hover:border-[var(--interactive-accent)]/30 transition-colors shrink-0">
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[var(--background-secondary)]/50 rounded-lg border border-[var(--background-modifier-border)] hover:border-[var(--interactive-accent)]/50 transition-colors shrink-0">
                     <Tag size={12} className="text-[var(--text-muted)]" />
-                    <select 
+                    <SelectStyled 
+                        variant="compact"
                         value={categoryId} 
-                        onChange={(e) => setCategoryId(e.target.value)}
-                        className="bg-transparent border-none p-0 text-[10px] font-black uppercase tracking-tight text-[var(--text-normal)] outline-none min-w-[80px] cursor-pointer"
-                    >
-                        <option value="auto" className="bg-[var(--background-primary)] italic font-bold">AUTO</option>
-                        {categoryRegistry.map(cat => <option key={cat.id} value={cat.id} className="bg-[var(--background-primary)]">{cat.name}</option>)}
-                    </select>
+                        onChange={(val) => {
+                            setCategoryId(val);
+                            if (val !== 'auto') {
+                                const selectedCat = categoryRegistry.find(c => c.id === val);
+                                if (selectedCat && selectedCat.type && selectedCat.type !== 'mixed') {
+                                    setType(selectedCat.type as Ledger.TransactionType);
+                                }
+                            }
+                        }}
+                        options={[
+                            { value: 'auto', label: 'AUTO' },
+                            ...categoryRegistry.map(cat => ({ value: cat.id, label: cat.name }))
+                        ]}
+                        className="bg-transparent border-none p-0 text-[10px] font-bold tracking-tight text-[var(--text-normal)] outline-none min-w-[80px] cursor-pointer"
+                    />
                 </div>
             )}
 
@@ -189,7 +230,20 @@ export const QuickEntry: React.FC = () => {
                 <input
                     type="text"
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        setInput(val);
+                        // Auto-detect type if typing category
+                        if (categoryId === 'auto' && type !== Ledger.TransactionType.TRANSFER) {
+                             const parseResult = parseQuickEntry(val, categoryRegistry);
+                             if (parseResult && parseResult.categoryId) {
+                                  const c = categoryRegistry.find(cat => cat.id === parseResult.categoryId);
+                                  if (c && c.type && c.type !== 'mixed') {
+                                       setType(c.type as Ledger.TransactionType);
+                                  }
+                             }
+                        }
+                    }}
                     onKeyDown={handleKeyDown}
                     placeholder={categoryId === 'auto' ? "Monto Categoría Nota" : "Monto y Nota..."}
                     className="bg-transparent border-none outline-none w-full text-xs font-black text-[var(--text-normal)] placeholder:text-[var(--text-faint)] focus:ring-0 placeholder:font-normal placeholder:italic truncate"

@@ -235,7 +235,7 @@ export const useBudgetMonitor = (viewMonth: string): BudgetMonitorResult => {
             }
         };
 
-    }, [viewMonth, historicalTxs, state.budgets, state.summaries, isHotData, convert, baseCurrency]);
+    }, [viewMonth, historicalTxs, state.budgets, state.transactions, state.categoryRegistry, state.summaries, isHotData, convert, baseCurrency]);
 };
 
 function getDefaultSummary() {

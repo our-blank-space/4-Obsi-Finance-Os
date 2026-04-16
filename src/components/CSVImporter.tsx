@@ -133,8 +133,8 @@ export const CSVImporter: React.FC<CSVImporterProps> = ({ isOpen, onClose, onImp
             className="hidden"
             id="csv-upload"
           />
-          <label htmlFor="csv-upload">
-            <button type="button" className="px-4 py-2 rounded-lg text-sm font-bold bg-blue-500 text-white hover:bg-blue-600">Buscar Archivo</button>
+          <label htmlFor="csv-upload" className="cursor-pointer">
+            <Button variant="primary" className="bg-blue-600 hover:bg-blue-500 pointer-events-none">Buscar Archivo</Button>
           </label>
         </div>
       )}
@@ -213,7 +213,7 @@ export const CSVImporter: React.FC<CSVImporterProps> = ({ isOpen, onClose, onImp
 
           <ModalFooter>
             <Button variant="ghost" onClick={() => setStep('mapping')}><X size={16} className="mr-2" /> Corregir</Button>
-            <Button onClick={confirmImport} icon={<Check size={16} />}>Confirmar Importación</Button>
+            <Button onClick={confirmImport} intent="save" icon={<Check size={16} />}>Confirmar Importación</Button>
           </ModalFooter>
         </div>
       )}

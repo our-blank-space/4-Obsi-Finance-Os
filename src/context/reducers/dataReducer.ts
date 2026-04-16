@@ -62,6 +62,7 @@ export type DataAction =
     | { type: 'ADD_TRANSACTIONS_BULK'; payload: Ledger.Transaction[] }
     | { type: 'HYDRATE_SHARD'; payload: Ledger.Transaction[] }
     | { type: 'UNLOAD_OLD_DATA'; payload: string }
+    | { type: 'UPDATE_ACCOUNT_DETAILS'; payload: { id: string; updates: Partial<Core.FinanceAccount> } }
     | { type: 'ADD_BUDGET'; payload: Ledger.Budget }
     | { type: 'UPDATE_BUDGET'; payload: Ledger.Budget }
     | { type: 'DELETE_BUDGET'; payload: string }
@@ -114,6 +115,43 @@ export function dataReducer(state: FinanceDataState, action: DataAction): Financ
         case 'UPDATE_SETTINGS':
             // Used for generic partial updates (settings, enabledModules, etc.)
             return { ...state, ...action.payload };
+
+        case 'UPDATE_ACCOUNT_DETAILS': {
+            const accToUpdate = state.accountRegistry.find(a => a.id === action.payload.id);
+            if (!accToUpdate) return state;
+            
+            let txs = state.transactions;
+            let recs = state.recurrents;
+            
+            // Si cambió el nombre, migramos transacciones atómicamente!
+            if (action.payload.updates.name && action.payload.updates.name !== accToUpdate.name) {
+                const oldName = accToUpdate.name;
+                const newName = action.payload.updates.name;
+                
+                txs = txs.map(t => {
+                    let changed = false; let update: any = {};
+                    if (t.from === oldName) { update.from = newName; changed = true; }
+                    if (t.to === oldName) { update.to = newName; changed = true; }
+                    if (t.fromId === accToUpdate.id) { update.from = newName; changed = true; }
+                    if (t.toId === accToUpdate.id) { update.to = newName; changed = true; }
+                    return changed ? { ...t, ...update } : t;
+                });
+                
+                recs = recs.map(r => {
+                    if (r.account === oldName || r.accountId === accToUpdate.id) return { ...r, account: newName };
+                    return r;
+                });
+            }
+            
+            return {
+                ...state,
+                accountRegistry: state.accountRegistry.map(a => 
+                    a.id === action.payload.id ? { ...a, ...action.payload.updates } : a
+                ),
+                transactions: txs,
+                recurrents: recs
+            };
+        }
 
         case 'UPDATE_FEATURE_FLAGS':
             return {

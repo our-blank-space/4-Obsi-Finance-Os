@@ -10,6 +10,9 @@ import { Zap, Download, ShieldAlert } from 'lucide-react';
 
 // UI Components
 import { Button } from './ui/Button';
+import { Input, Select } from './ui/Input';
+import { Plus } from 'lucide-react';
+import { useAccountActions } from '../hooks/useAccountActions';
 
 // Sub-componentes
 import { NetWorthHero } from './balances/NetWorthHero';
@@ -31,6 +34,13 @@ const Balances: React.FC = () => {
   const [transferDest, setTransferDest] = useState<string | null>(null);
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [adjustData, setAdjustData] = useState<{ id: string, name: string, balance: number } | null>(null);
+
+  // --- NUEVA CUENTA STATE ---
+  const [showNewAccount, setShowNewAccount] = useState(false);
+  const [newAccountName, setNewAccountName] = useState('');
+  const [newAccountCurrency, setNewAccountCurrency] = useState(baseCurrency);
+  const [createAccountError, setCreateAccountError] = useState<string | null>(null);
+  const { createAccount } = useAccountActions();
 
   // --- ANALYTICS ---
   const health = useMemo(() =>
@@ -101,6 +111,17 @@ const Balances: React.FC = () => {
     setAdjustData(null);
   };
 
+  const handleCreateAccountSubmit = () => {
+    const err = createAccount(newAccountName, newAccountCurrency);
+    if (err) {
+      setCreateAccountError(err);
+      return;
+    }
+    setNewAccountName('');
+    setShowNewAccount(false);
+    setCreateAccountError(null);
+  };
+
   return (
     <div className={`space-y-8 pb-32 animate-in fade-in max-w-6xl mx-auto font-sans ${isTransferMode ? 'cursor-crosshair' : ''}`}>
 
@@ -121,13 +142,51 @@ const Balances: React.FC = () => {
         </div>
 
         <div className="flex gap-3">
-          <Button variant="secondary" icon={<Download size={14} />}>{t('bal.report')}</Button>
-          <button
+          <div className="relative">
+             <Button
+                onClick={() => setShowNewAccount(!showNewAccount)}
+                variant={showNewAccount ? 'primary' : 'secondary'}
+                className="px-6"
+             >
+                <Plus size={16} className="mr-2" /> nueva cuenta
+             </Button>
+             
+             {showNewAccount && (
+                 <div className="absolute top-full mb-3 md:mb-0 md:mt-3 right-0 md:right-auto md:left-0 w-[320px] bg-[var(--background-secondary)] border border-[var(--background-modifier-border)] rounded-2xl p-4 shadow-xl z-50 animate-in fade-in zoom-in-95">
+                    <div className="flex flex-col gap-3">
+                       <Input 
+                         value={newAccountName}
+                         onChange={e => { setNewAccountName(e.target.value); setCreateAccountError(null); }}
+                         placeholder="nombre de cuenta"
+                         error={createAccountError || undefined}
+                         autoFocus
+                         onKeyDown={e => {
+                            if (e.key === 'Enter') handleCreateAccountSubmit();
+                            if (e.key === 'Escape') setShowNewAccount(false);
+                         }}
+                       />
+                       <Select 
+                         value={newAccountCurrency}
+                         onChange={e => setNewAccountCurrency(e.target.value)}
+                         options={[
+                            { value: baseCurrency, label: `Moneda Base del sistema (${baseCurrency})` },
+                            { value: 'USD', label: 'USD' },
+                            { value: 'EUR', label: 'Euro' }
+                         ]}
+                       />
+                       <Button onClick={handleCreateAccountSubmit} intent="save" fullWidth>Guardar</Button>
+                    </div>
+                 </div>
+             )}
+          </div>
+          
+          <Button
             onClick={() => { setIsTransferMode(!isTransferMode); setTransferSource(null); }}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border ${isTransferMode ? 'bg-amber-500 text-white animate-pulse border-transparent shadow-lg shadow-amber-500/20' : 'bg-[var(--background-secondary)] text-[var(--text-muted)] border-[var(--background-modifier-border)]'}`}
+            variant={isTransferMode ? 'warning' : 'secondary'}
+            className={`px-6 ${isTransferMode ? 'animate-pulse' : ''}`}
           >
-            <Zap size={16} /> {isTransferMode ? (transferSource ? t('bal.transfer_to') : t('bal.transfer_from')) : t('bal.quick_transfer')}
-          </button>
+            <Zap size={16} className="mr-2" /> Transferencia Rápida
+          </Button>
         </div>
       </div>
 

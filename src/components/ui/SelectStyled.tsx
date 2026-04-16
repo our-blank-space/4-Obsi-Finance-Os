@@ -14,10 +14,12 @@ interface SelectStyledProps extends Omit<InputProps, 'onChange' | 'value'> {
     value: string;
     options: SelectOption[];
     onChange: (value: string) => void;
+    variant?: 'default' | 'compact';
+    className?: string;
 }
 
 export const SelectStyled: React.FC<SelectStyledProps> = ({ 
-    label, value, options, onChange, ...props 
+    label, value, options, onChange, variant = 'default', className = '', ...props 
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -35,24 +37,30 @@ export const SelectStyled: React.FC<SelectStyledProps> = ({
     }, [containerRef]);
     
     // El estilo que queremos darle al dropdown
-    const dropdownStyle = "absolute z-50 mt-1 w-full bg-[var(--background-secondary)] border border-[var(--background-modifier-border)] rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar animate-in fade-in slide-in-from-top-2";
+    const dropdownStyle = `absolute z-50 mt-1 ${variant === 'default' ? 'w-full' : 'min-w-[150px] whitespace-nowrap'} bg-[var(--background-secondary)] border border-[var(--background-modifier-border)] rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar animate-in fade-in slide-in-from-top-2`;
 
     return (
-        <div ref={containerRef} className="space-y-1.5 w-full relative">
-            {label && (
+        <div ref={containerRef} className={`relative ${variant === 'default' ? 'space-y-1.5 w-full' : ''}`}>
+            {label && variant === 'default' && (
                 <label className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1 block">
                     {label}
                 </label>
             )}
 
-            {/* El campo visible (el que queremos redondo) */}
+            {/* El campo visible */}
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full bg-[var(--background-primary)] border border-[var(--background-modifier-border)] text-[var(--text-normal)] rounded-xl h-10 px-3 py-2 text-sm font-bold outline-none cursor-pointer flex items-center justify-between transition-all hover:border-[var(--interactive-accent)]"
+                className={
+                    variant === 'compact'
+                        ? `flex items-center gap-1 cursor-pointer outline-none ${className}`
+                        : `w-full bg-[var(--background-primary)] border border-[var(--background-modifier-border)] text-[var(--text-normal)] rounded-xl h-10 px-3 py-2 text-sm font-bold outline-none cursor-pointer flex items-center justify-between transition-all hover:border-[var(--interactive-accent)] ${className}`
+                }
                 tabIndex={0}
             >
                 <span className="truncate">{selectedLabel}</span>
-                <ChevronDown size={16} className={`text-[var(--text-muted)] transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'}`} />
+                {variant === 'default' && (
+                    <ChevronDown size={16} className={`text-[var(--text-muted)] transition-transform shrink-0 ${isOpen ? 'rotate-180' : 'rotate-0'}`} />
+                )}
             </div>
 
             {/* El Desplegable (Totalmente Estilizado) */}

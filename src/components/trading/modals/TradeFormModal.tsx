@@ -86,15 +86,27 @@ export const TradeFormModal: React.FC<Props> = ({
                     <Input label={t('trade.market')} value={formData.market} onChange={e => setFormData({ ...formData, market: e.target.value })} placeholder="Binance" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    <SelectStyled
-                        label={t('trade.side')}
-                        value={(formData.side || TradeSide.BUY) as string}
-                        onChange={v => setFormData({ ...formData, side: v as TradeSide })}
-                        options={[
-                            { value: TradeSide.BUY, label: t('trade.side.buy') },
-                            { value: TradeSide.SELL, label: t('trade.side.sell') }
-                        ]}
-                    />
+                    <div className="space-y-1.5 focus-within:border-[var(--interactive-accent)]">
+                        <label className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1 block">
+                            {t('trade.side')}
+                        </label>
+                        <div className="flex bg-[var(--background-secondary)] p-1 rounded-xl border border-[var(--background-modifier-border)]">
+                            <button
+                                type="button"
+                                onClick={() => setFormData({ ...formData, side: TradeSide.BUY })}
+                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${formData.side === TradeSide.BUY ? 'bg-emerald-500 text-white shadow-sm' : 'text-[var(--text-muted)] hover:bg-[var(--background-primary)]'}`}
+                            >
+                                {t('trade.side.buy')}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setFormData({ ...formData, side: TradeSide.SELL })}
+                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${formData.side === TradeSide.SELL ? 'bg-rose-500 text-white shadow-sm' : 'text-[var(--text-muted)] hover:bg-[var(--background-primary)]'}`}
+                            >
+                                {t('trade.side.sell')}
+                            </button>
+                        </div>
+                    </div>
                     <Input label={t('trade.strategy')} value={formData.strategy} onChange={e => setFormData({ ...formData, strategy: e.target.value })} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -108,7 +120,7 @@ export const TradeFormModal: React.FC<Props> = ({
                 <Input label={t('label.note')} value={formData.notes} onChange={e => setFormData({ ...formData, notes: e.target.value })} />
                 <ModalFooter>
                     <Button variant="secondary" onClick={onClose}>{t('btn.cancel')}</Button>
-                    <Button type="submit">{t('btn.save')}</Button>
+                    <Button type="submit" intent="save">{t('btn.save')}</Button>
                 </ModalFooter>
             </form>
         </Modal>

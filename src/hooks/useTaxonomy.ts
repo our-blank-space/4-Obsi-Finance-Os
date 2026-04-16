@@ -159,5 +159,16 @@ export const useTaxonomy = () => {
         });
     }, [state, dispatch]);
 
-    return { renameEntity, deleteEntity, addEntity, checkDependencies };
+    const updateCategoryType = useCallback((name: string, newType: 'income' | 'expense' | 'mixed') => {
+        dispatch({
+            type: 'UPDATE_SETTINGS',
+            payload: {
+                categoryRegistry: state.categoryRegistry.map(c => 
+                    c.name === name ? { ...c, type: newType } : c
+                )
+            }
+        });
+    }, [state.categoryRegistry, dispatch]);
+
+    return { renameEntity, deleteEntity, addEntity, checkDependencies, updateCategoryType };
 };

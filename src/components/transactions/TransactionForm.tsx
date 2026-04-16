@@ -9,15 +9,17 @@ import { useObsidianLink } from '../../hooks/useObsidian';
 import { useFinance } from '../../context/FinanceContext';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useBalances } from '../../hooks/useBalances';
-import { validateTransaction, checkOverdraft } from '../../logic/validators';
+import { validateTransaction } from '../../logic/validators';
 import { FileText, AlertTriangle } from 'lucide-react';
 import { generateUUID } from '../../utils/uuid';
+import { useCurrency } from '../../hooks/useCurrency';
 
 export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: any) => {
   const { createTransactionNote } = useObsidianLink();
   const { state } = useFinance();
   const { t } = useTranslation();
-  const { balances } = useBalances(); // Obtener saldos
+  const { balances } = useBalances();
+  const { convert, baseCurrency: baseCurr } = useCurrency(); // alias para no colisionar con state.baseCurrency
   const { baseCurrency, accountRegistry, categoryRegistry } = state;
 
   // Options from Registries - Clean implementation (no fallbacks needed after MigrationManager)
@@ -57,26 +59,36 @@ export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: 
   // Default to user setting
   const [createNote, setCreateNote] = useState(state.settings.createNoteOnLog ?? false);
 
-  // Validate on change
+  // Validate on change: overdraft check
   useEffect(() => {
     const numericAmount = parseFloat(formData.amount.toString().replace(/[^0-9.-]/g, '')) || 0;
+    if (!numericAmount) { setOverdraftWarning(null); return; }
     
-    // Check Overdraft
     if (formData.type === TransactionType.EXPENSE || formData.type === TransactionType.TRANSFER) {
-      const accountBalanceObj = balances[formData.fromId];
-      // Type casting to any to bypass TS complaints about dynamic indexing if Currency isn't fully matched, but it exists
-      const currentBalance = accountBalanceObj ? ((accountBalanceObj as any)[formData.currency] || 0) : 0;
-
-      const overdraft = checkOverdraft(numericAmount, currentBalance);
-      if (overdraft.isOverdraft) {
-        setOverdraftWarning(`Overdraft Warning: El saldo quedará en negativo por ${Math.abs(overdraft.remaining).toLocaleString()}`);
+      const accountBalanceObj = balances[formData.fromId] as any;
+      
+      // Convertir cada divisa a base y sumar para obtener saldo real disponible
+      let currentBalanceBase = 0;
+      if (accountBalanceObj) {
+        Object.entries(accountBalanceObj).forEach(([curr, amt]: any) => {
+          currentBalanceBase += convert(Number(amt) || 0, curr, baseCurr);
+        });
+      }
+      
+      // Bloquear si: ya tiene saldo negativo, O si el monto supera el disponible
+      if (currentBalanceBase <= 0 || numericAmount > currentBalanceBase) {
+        const acc = accountRegistry.find(a => a.id === formData.fromId);
+        const accName = acc?.name || 'esta cuenta';
+        const disponible = Math.max(0, currentBalanceBase);
+        const faltante = (numericAmount - disponible).toLocaleString('es-CO', { maximumFractionDigits: 0 });
+        setOverdraftWarning(`⚠️ Saldo insuficiente en "${accName}". Faltan $${faltante} ${baseCurrency} para completar esta transacción.`);
       } else {
         setOverdraftWarning(null);
       }
     } else {
       setOverdraftWarning(null);
     }
-  }, [formData.amount, formData.fromId, formData.type, formData.currency, balances]);
+  }, [formData.amount, formData.fromId, formData.type, balances, accountRegistry, baseCurrency, baseCurr, convert]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +103,11 @@ export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: 
       { ...formData, amount: numericAmount },
       baseCurrency
     );
+
+    if (overdraftWarning) {
+      setValidationErrors([overdraftWarning]);
+      return;
+    }
 
     if (!isValid) {
       setValidationErrors(errors);
@@ -132,18 +149,40 @@ export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: 
         </div>
       )}
       {overdraftWarning && (
-        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-3 rounded-xl text-xs font-bold flex items-center gap-2">
-          <AlertTriangle size={14}/> {overdraftWarning}
+        <div className="bg-rose-500/10 border border-rose-500/40 text-rose-400 p-3 rounded-xl text-xs font-bold flex items-center gap-2">
+          <AlertTriangle size={14} className="shrink-0" /> {overdraftWarning}
         </div>
       )}
       <div className="grid grid-cols-2 gap-4">
         <Input label={t('logs.form.date')} type="date" value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
-        <SelectStyled
-          label={t('logs.form.type')}
-          options={typeOptions}
-          value={formData.type}
-          onChange={value => setFormData({ ...formData, type: value })}
-        />
+        <div className="space-y-1.5 focus-within:border-[var(--interactive-accent)]">
+          <label className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest pl-1 block">
+            {t('logs.form.type')}
+          </label>
+          <div className="flex bg-[var(--background-secondary)] p-1 rounded-xl border border-[var(--background-modifier-border)]">
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, type: TransactionType.EXPENSE })}
+              className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${formData.type === TransactionType.EXPENSE ? 'bg-rose-500 text-white shadow-sm' : 'text-[var(--text-muted)] hover:bg-[var(--background-primary)]'}`}
+            >
+              {t('logs.form.type.expense')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, type: TransactionType.INCOME })}
+              className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${formData.type === TransactionType.INCOME ? 'bg-emerald-500 text-white shadow-sm' : 'text-[var(--text-muted)] hover:bg-[var(--background-primary)]'}`}
+            >
+              {t('logs.form.type.income')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, type: TransactionType.TRANSFER })}
+              className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ${formData.type === TransactionType.TRANSFER ? 'bg-amber-500 text-white shadow-sm' : 'text-[var(--text-muted)] hover:bg-[var(--background-primary)]'}`}
+            >
+              {t('logs.form.type.transfer')}
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-2 items-end">
@@ -210,7 +249,7 @@ export const TransactionForm = ({ initialData, initialType, onSave, onCancel }: 
 
       <ModalFooter>
         <Button variant="ghost" onClick={onCancel}>{t('btn.cancel')}</Button>
-        <Button type="submit">{t('btn.save')}</Button>
+        <Button type="submit" disabled={!!overdraftWarning}>{t('btn.save')}</Button>
       </ModalFooter>
     </form>
   );

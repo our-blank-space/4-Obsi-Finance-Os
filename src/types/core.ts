@@ -37,6 +37,7 @@ export interface FinanceAccount {
     name: string;
     currency: Currency;
     isArchived: boolean;
+    type?: 'liquid' | 'invest';
 }
 
 export enum FinanceModule {

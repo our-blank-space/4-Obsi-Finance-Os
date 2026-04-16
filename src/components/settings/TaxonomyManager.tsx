@@ -3,6 +3,7 @@ import {
     Edit2, Trash2, AlertTriangle, Save, X,
     GitMerge, CheckCircle2, FolderCog
 } from 'lucide-react';
+import { useFinance } from '../../context/FinanceContext';
 import { useTaxonomy } from '../../hooks/useTaxonomy';
 import { useTranslation } from '../../hooks/useTranslation';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
@@ -18,7 +19,8 @@ interface Props {
 }
 
 export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, onRemove }) => {
-    const { renameEntity, deleteEntity, checkDependencies } = useTaxonomy();
+    const { state, triggerAutoSave } = useFinance();
+    const { renameEntity, deleteEntity, checkDependencies, updateCategoryType } = useTaxonomy();
     const { t } = useTranslation();
 
     // Estados UI
@@ -87,13 +89,14 @@ export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, on
                     onClick={() => { if (newItem) { onAdd(newItem); setNewItem(''); } }}
                     disabled={!newItem}
                     size="sm"
+                    intent="create"
                 >
                     {t('btn.add_caps')}
                 </Button>
             </div>
 
             {/* Lista Inteligente */}
-            <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+            <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                 {items.map(item => {
                     const isEditing = editingItem === item;
 
@@ -110,30 +113,72 @@ export const TaxonomyManager: React.FC<Props> = ({ title, items, type, onAdd, on
                                         if (e.key === 'Escape') setEditingItem(null);
                                     }}
                                 />
-                                <button onClick={handleConfirmRename} className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded"><Save size={12} /></button>
-                                <button onClick={() => setEditingItem(null)} className="p-1 text-[var(--text-muted)] hover:bg-[var(--text-muted)]/10 rounded"><X size={12} /></button>
+                                <Button 
+                                    onClick={handleConfirmRename} 
+                                    size="icon" 
+                                    variant="success" 
+                                    className="h-7 w-7 rounded-md"
+                                >
+                                    <Save size={12} />
+                                </Button>
+                                <Button 
+                                    onClick={() => setEditingItem(null)} 
+                                    size="icon" 
+                                    variant="ghost" 
+                                    className="h-7 w-7 rounded-md"
+                                >
+                                    <X size={12} />
+                                </Button>
                             </div>
                         );
                     }
 
+                    const isArea = type === 'area';
+                    const catObj = isArea ? state.categoryRegistry.find(c => c.name === item) : null;
+
                     return (
-                        <div key={item} className="group flex items-center gap-2 bg-[var(--background-primary)] border border-[var(--background-modifier-border)] px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm hover:border-[var(--text-normal)] transition-all">
-                            {item}
-                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-[var(--background-modifier-border)] pl-2 ml-1">
-                                <button
-                                    onClick={() => handleStartEdit(item)}
-                                    className="text-[var(--text-muted)] hover:text-[var(--interactive-accent)] transition-colors"
-                                    title={t('taxonomy.rename_merge')}
-                                >
-                                    <Edit2 size={10} />
-                                </button>
-                                <button
-                                    onClick={() => handleRequestDelete(item)}
-                                    className="text-[var(--text-muted)] hover:text-rose-500 transition-colors"
-                                    title={t('taxonomy.delete_btn')}
-                                >
-                                    <Trash2 size={10} />
-                                </button>
+                        <div key={item} className="group flex items-center justify-between bg-[var(--background-primary)] border border-[var(--background-modifier-border)] px-4 py-2 rounded-xl text-xs font-medium shadow-sm hover:border-[var(--interactive-accent)]/50 transition-all">
+                            <span className="truncate flex-1 min-w-0 pr-4">{item}</span>
+
+                            <div className="flex items-center gap-3 shrink-0">
+                                {/* Selector de Tipo de Categoría */}
+                                {isArea && catObj && (
+                                    <select
+                                        value={catObj.type || 'mixed'}
+                                        onChange={e => {
+                                            updateCategoryType(item, e.target.value as any);
+                                            triggerAutoSave();
+                                        }}
+                                        className="text-[10px] bg-[var(--background-secondary)] outline-none cursor-pointer text-[var(--text-muted)] hover:text-[var(--text-normal)] rounded-md px-2 py-1 min-w-[70px] font-bold border border-[var(--background-modifier-border)] transition-colors focus:border-[var(--interactive-accent)]/50 focus:ring-0"
+                                        title="Tipo predeterminado para Quick Entry"
+                                    >
+                                        <option value="mixed">Mixto</option>
+                                        <option value="expense">Gasto</option>
+                                        <option value="income">Ingreso</option>
+                                    </select>
+                                )}
+
+                                {/* Acciones Ocultas (Hover) */}
+                                <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity border-l border-[var(--background-modifier-border)] pl-3">
+                                    <Button
+                                        onClick={() => handleStartEdit(item)}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="p-1 h-6 w-6 border-none group/edit hover:text-[var(--interactive-accent)]"
+                                        title={t('taxonomy.rename_merge')}
+                                    >
+                                        <Edit2 size={12} />
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleRequestDelete(item)}
+                                        variant="danger"
+                                        size="sm"
+                                        className="p-1 h-6 w-6 border-none"
+                                        title={t('taxonomy.delete_btn')}
+                                    >
+                                        <Trash2 size={12} />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     );
